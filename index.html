@@ -79,7 +79,7 @@ code{background:var(--panel-alt); padding:1px 6px; border-radius:4px; font-famil
 .quicknav__pills{display:flex; align-items:center; gap:2px; height:100%; overflow-x:auto; scrollbar-width:none; flex:1; min-width:0;}
 .quicknav__pills::-webkit-scrollbar{display:none;}
 .quicknav__item{position:relative; flex-shrink:0; height:100%;}
-.quicknav__pill{display:flex; align-items:center; gap:6px; height:100%; padding:0 11px; text-decoration:none; white-space:nowrap; border-bottom:2.5px solid transparent; cursor:pointer;}
+.quicknav__pill{display:flex; align-items:center; gap:6px; height:100%; padding:0 8px; text-decoration:none; white-space:nowrap; border-bottom:2.5px solid transparent; cursor:pointer;}
 .quicknav__pill-num{font-family:var(--mono); font-size:10.5px; font-weight:700; letter-spacing:.03em; color:var(--pill-c, var(--ink-faint)); background:var(--pill-tint, var(--panel-alt)); border-radius:6px; padding:2px 6px;}
 .quicknav__pill-label{font-family:var(--display); font-size:12.5px; font-weight:600; color:var(--ink-soft); max-width:150px; overflow:hidden; text-overflow:ellipsis;}
 .quicknav__item:hover .quicknav__pill, .quicknav__item.active .quicknav__pill{border-bottom-color:var(--pill-c, var(--teal));}
@@ -235,6 +235,88 @@ footer{max-width:760px; padding:20px 0 60px; font-family:var(--mono); font-size:
   html{scroll-behavior:auto;}
   .flashcard__inner, .osi-layer__panel, .osi-layer__chev, .sidebar{transition:none;}
 }
+
+/* ===== QUIZ (service picker) ===== */
+.qn-quiz{--pill-c:var(--teal); --pill-tint:var(--teal-tint);}
+.quiz{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:26px; box-shadow:var(--shadow); margin-top:22px; scroll-margin-top:84px; outline:none;}
+.quiz h3{font-size:21px; margin-bottom:6px;}
+.quiz__sub{color:var(--ink-soft); font-size:15px; margin:0 0 16px;}
+.quiz__modes{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:22px;}
+.quiz__mode{font:inherit; text-align:left; background:var(--panel); border:2px solid var(--line); border-radius:var(--radius); padding:16px 18px; cursor:pointer; color:var(--ink); display:flex; flex-direction:column; gap:6px; transition:border-color .15s, background .15s;}
+.quiz__mode:hover{border-color:var(--teal-bright);}
+.quiz__mode.is-on{border-color:var(--teal); background:var(--teal-tint);}
+.quiz__mode-t{font-family:var(--display); font-weight:600; font-size:18px;}
+.quiz__mode-d{font-size:14px; line-height:1.5; color:var(--ink-soft);}
+.quiz__mods{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 16px; padding:0; border:0;}
+.quiz__mods legend{font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-soft); padding:0; margin-bottom:8px;}
+.quiz__chk{display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:999px; padding:6px 14px; font-size:14px; line-height:1.3; cursor:pointer; background:var(--panel-alt); min-height:38px;}
+.quiz__chk input{accent-color:var(--teal); width:16px; height:16px; margin:0;}
+.quiz__info{font-size:14px; color:var(--ink-soft); margin:0 0 16px;}
+.quiz__best{font-family:var(--mono); font-size:12px; color:var(--ink-soft); margin:14px 0 0;}
+.quiz__btn{font-family:var(--display); font-weight:600; font-size:16px; background:var(--teal); color:#fff; border:2px solid var(--teal); border-radius:10px; padding:10px 20px; min-height:44px; cursor:pointer;}
+.quiz__btn:hover:not(:disabled){background:#096a73; border-color:#096a73;}
+.quiz__btn:disabled{opacity:.45; cursor:not-allowed;}
+.quiz__btn--ghost{background:transparent; color:var(--teal);}
+.quiz__btn--ghost:hover:not(:disabled){background:var(--teal-tint); border-color:var(--teal);}
+.quiz__btn--flag.is-on{background:var(--amber-tint); color:var(--amber-ink); border-color:var(--amber);}
+.quiz :focus-visible{outline:3px solid var(--azure); outline-offset:2px;}
+.quiz__top{display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px; margin-bottom:10px; font-family:var(--mono); font-size:12px; color:var(--ink-soft);}
+.quiz__badge{padding:3px 10px; border-radius:999px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; font-size:11px;}
+.quiz__badge--practice{background:var(--moss-tint); color:var(--moss-ink);}
+.quiz__badge--exam{background:var(--plum-tint); color:var(--plum-ink);}
+.quiz__answered{margin-left:auto;}
+.quiz__bar{height:6px; background:var(--panel-alt); border-radius:99px; overflow:hidden; margin-bottom:20px;}
+.quiz__bar > span{display:block; height:100%; background:var(--teal-bright); border-radius:99px; transition:width .25s;}
+.quiz__q{font-size:18px; line-height:1.6; margin:0 0 18px; outline:none;}
+.quiz__opts{display:grid; gap:10px; margin-bottom:16px;}
+.quiz__opt{font:inherit; font-size:16px; text-align:left; display:flex; align-items:center; gap:12px; width:100%; min-height:48px; padding:10px 14px; background:var(--panel); border:2px solid var(--line); border-radius:12px; color:var(--ink); cursor:pointer; transition:border-color .12s, background .12s;}
+.quiz__opt:hover:not([aria-disabled="true"]){border-color:var(--teal-bright); background:var(--teal-tint);}
+.quiz__key{flex:none; display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:8px; background:var(--panel-alt); font-family:var(--mono); font-size:13px; font-weight:600; color:var(--ink-soft);}
+.quiz__opt-t{flex:1;}
+.quiz__mark{flex:none; font-family:var(--mono); font-weight:700;}
+.quiz__opt.is-picked{border-color:var(--plum); background:var(--plum-tint);}
+.quiz__opt.is-picked .quiz__key{background:var(--plum); color:#fff;}
+.quiz__opt.is-correct{border-color:var(--moss); background:var(--moss-tint); color:var(--moss-ink);}
+.quiz__opt.is-correct .quiz__key{background:var(--moss); color:#fff;}
+.quiz__opt.is-wrong{border-color:var(--rust); background:var(--rust-tint); color:var(--rust-ink);}
+.quiz__opt.is-wrong .quiz__key{background:var(--rust); color:#fff;}
+.quiz__opt.is-dim{opacity:.6;}
+.quiz__opt[aria-disabled="true"]{cursor:default;}
+.quiz__fb{border-radius:12px; padding:14px 16px; margin-bottom:16px; font-size:15px; line-height:1.6;}
+.quiz__fb p{margin:6px 0 8px;}
+.quiz__fb a{font-weight:600;}
+.quiz__fb--ok{background:var(--moss-tint); color:var(--moss-ink);}
+.quiz__fb--bad{background:var(--rust-tint); color:var(--rust-ink);}
+.quiz__ctl{display:flex; flex-wrap:wrap; gap:10px; align-items:center;}
+.quiz__ctl .quiz__spacer{flex:1;}
+.quiz__nav{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:18px;}
+.quiz__dot{font-family:var(--mono); font-size:12px; width:34px; height:34px; border-radius:8px; border:1px solid var(--line); background:var(--panel); color:var(--ink-soft); cursor:pointer; padding:0;}
+.quiz__dot.is-ans{background:var(--plum-tint); border-color:var(--plum); color:var(--plum-ink);}
+.quiz__dot.is-flag{box-shadow:inset 0 -4px 0 var(--amber);}
+.quiz__dot.is-cur{outline:2px solid var(--ink); outline-offset:1px;}
+.quiz__score{display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 16px; margin-bottom:6px;}
+.quiz__score-n{font-family:var(--display); font-weight:700; font-size:46px; line-height:1; color:var(--teal);}
+.quiz__score-p{font-family:var(--mono); font-size:15px; color:var(--ink-soft);}
+.quiz__verdict{font-size:16px; margin:0 0 16px;}
+.quiz__rev-h{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; margin:26px 0 12px;}
+.quiz__rev-h h4{font-size:17px;}
+.quiz__rev{border:1px solid var(--line); border-left-width:5px; border-radius:12px; padding:14px 16px; margin-bottom:12px; font-size:15px; line-height:1.6;}
+.quiz__rev--ok{border-left-color:var(--moss);}
+.quiz__rev--bad{border-left-color:var(--rust);}
+.quiz__rev-n{font-family:var(--mono); font-size:12px; color:var(--ink-soft); margin-bottom:4px; display:block;}
+.quiz__rev p{margin:0 0 6px;}
+.quiz__rev .quiz__ya{color:var(--rust-ink);}
+.quiz__rev .quiz__ca{color:var(--moss-ink); font-weight:600;}
+.quiz__rev small{display:block; color:var(--ink-soft); margin-top:4px;}
+@media (max-width:700px){
+  .quiz{padding:18px;}
+  .quiz__modes{grid-template-columns:1fr;}
+  .quiz__q{font-size:17px;}
+  .quiz__score-n{font-size:38px;}
+}
+@media (prefers-reduced-motion:reduce){
+  .quiz__bar > span, .quiz__opt, .quiz__mode{transition:none;}
+}
 </style>
 </head>
 <body>
@@ -252,6 +334,7 @@ footer{max-width:760px; padding:20px 0 60px; font-family:var(--mono); font-size:
       <div class="quicknav__item qn-m5" data-module="m5"><a class="quicknav__pill" href="#waf"><span class="quicknav__pill-num">M5</span><span class="quicknav__pill-label">Best Practices</span><span class="quicknav__caret">▾</span></a><div class="quicknav__dropdown"><div class="quicknav__dropdown-head">Module 5 · Best Practices</div><a href="#waf">5.1 Well-Architected FW</a><a href="#design-principles">5.2 Design Principles</a><a href="#scalability-elasticity">5.3 Scalability & Elasticity</a><a href="#ha-ft">5.4 HA & Fault Tolerance</a><a href="#cost-optimization">5.5 Cost Optimization</a><a href="#performance-efficiency">5.6 Performance Efficiency</a><a href="#revision-m5">M5 Revision</a></div></div>
       <div class="quicknav__item qn-m6" data-module="m6"><a class="quicknav__pill" href="#console"><span class="quicknav__pill-num">M6</span><span class="quicknav__pill-label">Operational Exp.</span><span class="quicknav__caret">▾</span></a><div class="quicknav__dropdown"><div class="quicknav__dropdown-head">Module 6 · Operational Exp.</div><a href="#console">6.1 Management Console</a><a href="#cli">6.2 AWS CLI</a><a href="#sdks">6.3 AWS SDKs</a><a href="#cloudformation">6.4 CloudFormation</a><a href="#ta-ops">6.5 Trusted Advisor</a><a href="#cloudwatch">6.6 CloudWatch</a><a href="#ssm">6.7 Systems Manager</a><a href="#revision-m6">M6 Revision</a></div></div>
       <div class="quicknav__item qn-m7" data-module="m7"><a class="quicknav__pill" href="#route53"><span class="quicknav__pill-num">M7</span><span class="quicknav__pill-label">Networking</span><span class="quicknav__caret">▾</span></a><div class="quicknav__dropdown"><div class="quicknav__dropdown-head">Module 7 · Networking</div><a href="#route53">7.1 Route 53</a><a href="#cloudfront">7.2 CloudFront</a><a href="#api-gateway">7.3 API Gateway</a><a href="#direct-connect">7.4 Direct Connect</a><a href="#vpn">7.5 AWS VPN</a><a href="#transit-gateway">7.6 Transit Gateway</a><a href="#scenarios-m7">7.7 Scenario Drills</a><a href="#revision-m7">M7 Revision</a></div></div>
+      <div class="quicknav__item qn-quiz" data-module="quiz"><a class="quicknav__pill" href="#quiz"><span class="quicknav__pill-num">Q</span><span class="quicknav__pill-label">Quiz</span></a></div>
   </div>
   <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
 </div>
@@ -332,6 +415,9 @@ footer{max-width:760px; padding:20px 0 60px; font-family:var(--mono); font-size:
       <a class="toc__link" href="#transit-gateway">7.6 AWS Transit Gateway</a>
       <a class="toc__link" href="#scenarios-m7">7.7 Architecture Scenario Drills</a>
       <a class="toc__link" href="#revision-m7">M7 Quick Revision</a>
+
+      <div class="toc__group"><b>Practice</b> · Test yourself</div>
+      <a class="toc__link" href="#quiz">Service Picker Quiz</a>
     </nav>
     <div class="sidebar__footer">
       Built from your uploaded Module 1–7 slide decks (BECE355L).<br>
@@ -3076,6 +3162,25 @@ footer{max-width:760px; padding:20px 0 60px; font-family:var(--mono); font-size:
       </div>
     </section>
 
+    <!-- ============================================================ -->
+    <!-- ======================= QUIZ =============================== -->
+    <!-- ============================================================ -->
+
+    <div class="module-divider">
+      <div class="module-divider__eyebrow">Practice</div>
+      <h2 class="module-divider__title">Pick the Right Service</h2>
+      <p class="module-divider__lede">Short real-world scenarios, four options each: choose the most appropriate AWS service or feature. Questions are drawn from the Module 1–7 short notes.</p>
+    </div>
+
+    <section class="section" id="quiz">
+      <div class="section__eyebrow">Quiz</div>
+      <h2 class="section__title">Service Picker Quiz</h2>
+      <p class="section__lede">20 random questions per attempt, with the answer options shuffled every time. <strong>Practice</strong> mode explains each answer straight away; <strong>Exam</strong> mode uses a separate, harder pool and keeps everything hidden until you submit.</p>
+      <div class="quiz" id="quizApp" tabindex="-1">
+        <noscript>The quiz needs JavaScript enabled.</noscript>
+      </div>
+    </section>
+
     <footer>Advanced Cloud Computing (BECE355L) · Study Notes — Modules 1–7, complete syllabus</footer>
 
   </main>
@@ -3098,7 +3203,7 @@ updateProgress();
 
 const sections = document.querySelectorAll('.content section[id], .hero[id]');
 const links = document.querySelectorAll('.toc__link');
-const sectionModule = {'intro-cloud':'m1', 'aws-overview':'m1', 'service-models':'m1', 'deployment-models':'m1', 'global-infra':'m1', 'shared-resp':'m1', 'revision-m1':'m1', 'ec2':'m2', 's3':'m2', 'rds':'m2', 'vpc':'m2', 'sqs':'m2', 'sns':'m2', 'revision-m2':'m2', 'lambda':'m3', 'dynamodb':'m3', 'ecs':'m3', 'glacier':'m3', 'kinesis':'m3', 'redshift':'m3', 'emr':'m3', 'dr-backup':'m3', 'revision-m3':'m3', 'iam':'m4', 'srm-security':'m4', 'kms':'m4', 'inspector':'m4', 'organizations':'m4', 'trusted-advisor':'m4', 'compliance':'m4', 'revision-m4':'m4', 'waf':'m5', 'design-principles':'m5', 'scalability-elasticity':'m5', 'ha-ft':'m5', 'cost-optimization':'m5', 'performance-efficiency':'m5', 'revision-m5':'m5', 'console':'m6', 'cli':'m6', 'sdks':'m6', 'cloudformation':'m6', 'ta-ops':'m6', 'cloudwatch':'m6', 'ssm':'m6', 'revision-m6':'m6', 'route53':'m7', 'cloudfront':'m7', 'api-gateway':'m7', 'direct-connect':'m7', 'vpn':'m7', 'transit-gateway':'m7', 'scenarios-m7':'m7', 'revision-m7':'m7', 'hero':'hero', 'scope-note':'m7'};
+const sectionModule = {'intro-cloud':'m1', 'aws-overview':'m1', 'service-models':'m1', 'deployment-models':'m1', 'global-infra':'m1', 'shared-resp':'m1', 'revision-m1':'m1', 'ec2':'m2', 's3':'m2', 'rds':'m2', 'vpc':'m2', 'sqs':'m2', 'sns':'m2', 'revision-m2':'m2', 'lambda':'m3', 'dynamodb':'m3', 'ecs':'m3', 'glacier':'m3', 'kinesis':'m3', 'redshift':'m3', 'emr':'m3', 'dr-backup':'m3', 'revision-m3':'m3', 'iam':'m4', 'srm-security':'m4', 'kms':'m4', 'inspector':'m4', 'organizations':'m4', 'trusted-advisor':'m4', 'compliance':'m4', 'revision-m4':'m4', 'waf':'m5', 'design-principles':'m5', 'scalability-elasticity':'m5', 'ha-ft':'m5', 'cost-optimization':'m5', 'performance-efficiency':'m5', 'revision-m5':'m5', 'console':'m6', 'cli':'m6', 'sdks':'m6', 'cloudformation':'m6', 'ta-ops':'m6', 'cloudwatch':'m6', 'ssm':'m6', 'revision-m6':'m6', 'route53':'m7', 'cloudfront':'m7', 'api-gateway':'m7', 'direct-connect':'m7', 'vpn':'m7', 'transit-gateway':'m7', 'scenarios-m7':'m7', 'revision-m7':'m7', 'hero':'hero', 'scope-note':'m7', 'quiz':'quiz'};
 const quicknavItems = document.querySelectorAll('.quicknav__item');
 function setActiveModule(mod) {
   quicknavItems.forEach(it => it.classList.toggle('active', it.dataset.module === mod));
@@ -3138,6 +3243,398 @@ document.querySelectorAll('.osi-layer__btn').forEach(btn => {
 document.querySelectorAll('.flashcard').forEach(card => {
   card.addEventListener('click', () => card.classList.toggle('flipped'));
 });
+</script>
+
+<script>
+/* =====================================================================
+   SERVICE PICKER QUIZ
+   ---------------------------------------------------------------------
+   Question row format (easy to edit / extend):
+     [module, notes-section-id, scenario, [CORRECT, wrong, wrong, wrong], explanation]
+   The FIRST option is always the correct one; options are shuffled at run time.
+   PRACTICE = direct-recognition questions. EXAM = harder, constraint-based ones.
+   Built only from the "AWS all modules short notes" PDF (Modules 1-7).
+   ===================================================================== */
+(function () {
+  const MODS = {m1:'Cloud Concepts', m2:'Core Services', m3:'DB & More', m4:'Security', m5:'Best Practices', m6:'Operational Exp.', m7:'Networking'};
+  const NUM = 20;
+
+  const PRACTICE = [
+    // ---------- Module 1 ----------
+    ["m1","service-models","A team wants to use a finished application over the internet and pay only to use it, with no responsibility for servers, the OS or development tools. Which service model fits?",["SaaS","IaaS","PaaS","On-premises hosting"],"In SaaS the provider controls the cloud and the software; the organization simply rents the application."],
+    ["m1","service-models","Developers want a provider-managed platform with infrastructure and development tools so they can build their own software without managing the underlying hardware. Which service model fits?",["PaaS","SaaS","IaaS","Private cloud"],"PaaS gives infrastructure plus a development platform; the organization develops its own applications on top."],
+    ["m1","deployment-models","A large organization wants sensitive data kept in its own controlled environment while using rented public capacity for development and testing. Which deployment model fits?",["Hybrid cloud","Public cloud","Private cloud","SaaS"],"Hybrid cloud combines private and public clouds: critical data stays private while dev/test run in the public cloud for cost savings."],
+    ["m1","global-infra","You want your application to keep running if one data center in a Region fails. What should you spread your resources across?",["Multiple Availability Zones","A single Availability Zone","A single, larger instance","One edge location"],"AZs are isolated data centers with independent power, cooling and networking, giving fault isolation inside a Region."],
+    ["m1","shared-resp","Under the Shared Responsibility Model, who patches the guest operating system and the applications running on your instances?",["The customer (security 'in' the cloud)","AWS (security 'of' the cloud)","AWS Regions","Edge locations"],"AWS patches the infrastructure; customers patch their own guest OS, databases and applications."],
+
+    // ---------- Module 2 ----------
+    ["m2","ec2","You need virtual servers that can run Windows or Linux and whose CPU and memory you can resize as demand changes. Which service?",["Amazon EC2","Amazon S3","Amazon SQS","Amazon SNS"],"EC2 provides resizable virtual-machine capacity with a choice of operating systems and instance types."],
+    ["m2","s3","A media site must store millions of images and videos with 99.999999999% durability and pay only for what it uses. Which service?",["Amazon S3","Amazon RDS","Amazon VPC","Amazon SNS"],"S3 is scalable object storage with eleven nines of durability and pay-as-you-go pricing."],
+    ["m2","rds","A team wants a managed MySQL database where backups, patching and scaling are automated for them. Which service?",["Amazon RDS","Amazon S3","Amazon SQS","Amazon CloudFront"],"RDS is a fully managed relational database service that automates backups, patching and scaling."],
+    ["m2","vpc","You need a logically isolated virtual network in AWS with your own IP ranges and separate public and private subnets. Which service?",["Amazon VPC","Amazon Route 53","Amazon CloudFront","AWS IAM"],"VPC lets you create an isolated virtual network with custom IP addressing and subnets."],
+    ["m2","sqs","A producer generates data faster than the consumer can process it. You need a managed buffer that holds messages until they are processed. Which service?",["Amazon SQS","Amazon SNS","Amazon CloudFront","AWS Direct Connect"],"SQS stores messages in a queue as a buffer, so producer and consumer can work independently."],
+    ["m2","sns","An application must send the same alert to many subscribers by email and SMS at once. Which service?",["Amazon SNS","Amazon SQS","Amazon S3","Amazon EBS"],"SNS uses publish/subscribe: one message to a topic is delivered to every subscribed endpoint."],
+    ["m2","sns","A mobile app needs to send push notifications to iOS and Android devices. Which service?",["Amazon SNS","Amazon SQS","Amazon Redshift","AWS CloudFormation"],"SNS integrates with services such as APNS and FCM to send mobile push notifications."],
+    ["m2","ec2","An application runs at a steady state for three years and you want up to 75% off On-Demand prices. Which EC2 pricing option fits?",["Standard Reserved Instances","Spot Instances","On-Demand Instances","Scheduled Reserved Instances"],"Standard RIs give up to 75% discount for steady-state applications on a 1- or 3-year commitment."],
+    ["m2","ec2","A data-processing job has flexible start and end times and can tolerate interruption. Which EC2 pricing option is the cheapest fit?",["Spot Instances","Standard Reserved Instances","On-Demand Instances","Dedicated Hosts"],"Spot Instances use spare capacity at deep discounts for flexible, fault-tolerant workloads."],
+    ["m2","rds","A relational database is slowed down by heavy read queries. Which RDS feature offloads the reads?",["Read Replicas","Multi-AZ deployment","DB parameter group","DB security group"],"Read replicas offload read queries for read-heavy workloads; Multi-AZ is about high availability."],
+    ["m2","rds","You want a relational database that automatically fails over to a standby in another Availability Zone. Which RDS feature?",["Multi-AZ deployment","Read Replicas","DB parameter group","DB security group"],"Multi-AZ replicates synchronously to a standby in another AZ and promotes it if the primary fails."],
+    ["m2","vpc","Instances in a private subnet need outbound internet access for updates but must not accept inbound internet connections. What do you use?",["NAT gateway","Internet gateway attached to the private subnet","An Elastic IP on every instance","VPC peering"],"A NAT gateway routes traffic from private subnets out through a public subnet."],
+    ["m2","vpc","You want a stateless firewall layer that controls traffic for an entire subnet. Which VPC feature?",["Network ACL","Security group","Route table","Elastic IP"],"Network ACLs are stateless and work at subnet level; security groups work at the instance level."],
+    ["m2","ec2","An EC2 instance needs persistent block storage volumes that can be attached and detached. Which service?",["Amazon EBS","Amazon SNS","Amazon Route 53","AWS KMS"],"EBS provides persistent block storage volumes for EC2 instances."],
+    ["m2","sqs","Messages must be processed exactly once and in the exact order they were sent. Which option?",["SQS FIFO queue","SQS Standard queue","SNS Standard topic","CloudWatch alarm"],"FIFO queues guarantee order and exactly-once processing; Standard queues give at-least-once, best-effort ordering."],
+    ["m2","vpc","You need to capture information about IP traffic going to and from network interfaces in your VPC for troubleshooting. Which feature?",["VPC Flow Logs","Network ACL","Internet gateway","Route table"],"VPC Flow Logs capture IP traffic information for monitoring and troubleshooting."],
+    ["m2","s3","You want S3 to automatically move objects to cheaper storage classes and delete them after a set period. Which feature?",["Lifecycle policies","Versioning","Bucket ACLs","Key pairs"],"Lifecycle policies transition data between storage classes or delete objects after a period."],
+
+    // ---------- Module 3 ----------
+    ["m3","lambda","Code should run automatically whenever an image is uploaded to an S3 bucket, with no servers to manage and billing only for execution time. Which service?",["AWS Lambda","Amazon EC2","Amazon RDS","AWS Direct Connect"],"Lambda is event-driven, serverless compute that you pay for only while code runs."],
+    ["m3","dynamodb","A mobile game needs a fully managed NoSQL key-value store with single-digit-millisecond responses at any scale. Which service?",["Amazon DynamoDB","Amazon Redshift","Amazon RDS","Amazon EMR"],"DynamoDB is a fully managed key-value/document NoSQL database with single-digit-millisecond latency."],
+    ["m3","ecs","A team wants a managed service to run and orchestrate Docker containers across a cluster. Which service?",["Amazon ECS","AWS Lambda","Amazon S3 Glacier","AWS Trusted Advisor"],"ECS is a managed container orchestration service for Docker containers."],
+    ["m3","ecs","You want to run ECS containers without provisioning or managing EC2 instances. What do you use?",["AWS Fargate","ECS on EC2 instances","Amazon EBS","AWS Inspector"],"Fargate is the serverless launch type that runs containers without managing the underlying servers."],
+    ["m3","glacier","Compliance requires keeping records for years; they are rarely accessed and the lowest storage cost matters most. Which service?",["Amazon S3 Glacier","Amazon DynamoDB","Amazon EBS","Amazon ElastiCache"],"S3 Glacier is low-cost archival storage for rarely accessed, long-term data."],
+    ["m3","kinesis","An application must ingest continuous website clickstream data and process it in real time. Which service?",["Amazon Kinesis Data Streams","Amazon S3 Glacier","Amazon Redshift","AWS CloudFormation"],"Kinesis Data Streams handles rapid, continuous ingestion of clickstreams, logs and sensor data."],
+    ["m3","kinesis","Streaming data should be delivered automatically into S3 or Redshift. Which Kinesis capability fits?",["Kinesis Data Firehose","Kinesis Video Streams","Kinesis Data Analytics","DynamoDB Streams"],"Firehose loads streaming data into destinations such as S3, Redshift and Elasticsearch."],
+    ["m3","kinesis","A company wants to stream and process video from cameras. Which service?",["Kinesis Video Streams","Kinesis Data Firehose","Amazon SQS","Amazon SNS"],"Kinesis Video Streams is for streaming video data."],
+    ["m3","kinesis","You want to run SQL-like queries on streaming data to derive insights in real time. Which service?",["Kinesis Data Analytics","Kinesis Data Firehose","Amazon S3","AWS Backup"],"Kinesis Data Analytics lets you analyze streams in real time with SQL-like queries."],
+    ["m3","redshift","Analysts need fast SQL queries over petabytes of data using columnar storage and massively parallel processing. Which service?",["Amazon Redshift","Amazon DynamoDB","Amazon SQS","AWS Lambda"],"Redshift is a petabyte-scale managed data warehouse using MPP and columnar storage."],
+    ["m3","emr","A company wants managed clusters to run Hadoop and Spark for big-data processing. Which service?",["Amazon EMR","Amazon RDS","AWS Lambda","Amazon SNS"],"EMR simplifies running big-data frameworks such as Hadoop, Spark, HBase and Presto on AWS."],
+    ["m3","dr-backup","You want to automate backup scheduling and management across AWS services. Which service?",["AWS Backup","AWS CloudFormation","Amazon Route 53","AWS Organizations"],"AWS Backup automates backup scheduling, management and compliance."],
+    ["m3","dr-backup","You need to recover on-premises servers on AWS using real-time replication. Which service?",["AWS Elastic Disaster Recovery","Amazon S3 Glacier","AWS Inspector","Amazon EBS"],"AWS Elastic Disaster Recovery is a managed service that simplifies DR to AWS using real-time replication."],
+    ["m3","dynamodb","You want to capture item-level changes in a DynamoDB table in real time and react to them with Lambda. Which feature?",["DynamoDB Streams","DynamoDB Global Tables","Local Secondary Index","On-demand backup"],"DynamoDB Streams capture data changes in real time and can trigger Lambda functions."],
+    ["m3","dynamodb","DynamoDB data must be replicated across multiple Regions for low-latency reads and disaster recovery. Which feature?",["Global Tables","Local Secondary Indexes","DynamoDB Streams","Provisioned capacity mode"],"Global Tables provide cross-Region replication."],
+    ["m3","glacier","Which Glacier retrieval option is the slowest (12+ hours) but the least expensive?",["Bulk","Expedited","Standard","Cross-Region Replication"],"Expedited is fastest (minutes), Standard takes hours, and Bulk is slowest but cheapest."],
+
+    // ---------- Module 4 ----------
+    ["m4","iam","You need to control who can access which AWS resources by creating users, groups, roles and policies. Which service?",["AWS IAM","AWS KMS","AWS Inspector","AWS Artifact"],"IAM manages users, groups, roles and access policies."],
+    ["m4","iam","Which IAM feature adds an extra layer of security beyond a username and password?",["Multi-Factor Authentication (MFA)","Service Control Policies","Resource-based policies","Access keys"],"MFA requires an additional authentication method on top of the password."],
+    ["m4","iam","An EC2 instance must call other AWS services using temporary credentials, with no hard-coded keys. What do you attach?",["An IAM role","Root account access keys","A security group","A network ACL"],"IAM roles supply temporary credentials to services such as EC2 without exposing long-term keys."],
+    ["m4","kms","You need to create, manage, rotate and audit the encryption keys used across S3, EBS and RDS. Which service?",["AWS KMS","AWS IAM","AWS Inspector","AWS Organizations"],"KMS is a managed service for creating and controlling cryptographic keys, integrated with S3, EBS, RDS and more."],
+    ["m4","inspector","You want an automated security assessment that checks EC2 instances for vulnerabilities and reports findings by severity. Which service?",["AWS Inspector","AWS Trusted Advisor","AWS Artifact","AWS Organizations"],"Inspector runs automated assessments and gives detailed, severity-ranked findings."],
+    ["m4","organizations","A company wants to centrally manage many AWS accounts and get one consolidated bill. Which service?",["AWS Organizations","AWS IAM","AWS CloudTrail","AWS Artifact"],"Organizations manages multiple accounts centrally with consolidated billing and policies."],
+    ["m4","organizations","Which feature applies permission guardrails to an organizational unit or account in AWS Organizations?",["Service Control Policies (SCPs)","Security groups","Key pairs","Placement groups"],"SCPs control access to AWS services at the organization, OU or account level."],
+    ["m4","trusted-advisor","Which tool checks your account against best practices for cost optimization, security, fault tolerance, performance and service limits?",["AWS Trusted Advisor","AWS Inspector","AWS KMS","Amazon Route 53"],"Trusted Advisor performs checks in exactly those five categories."],
+    ["m4","compliance","An auditor wants on-demand access to AWS's compliance reports and certifications. Which portal?",["AWS Artifact","AWS CloudTrail","AWS Config","AWS Inspector"],"AWS Artifact is the self-service portal for AWS security and compliance documentation."],
+    ["m4","kms","You need to audit API requests made to KMS to see who used a key. Which service records this?",["AWS CloudTrail","Amazon SNS","AWS Artifact","Amazon Route 53"],"CloudTrail tracks all API requests made to KMS for auditing key usage."],
+    ["m4","kms","You want to create and manage encryption keys in your own hardware security module. Which service integrates with the KMS custom key store?",["AWS CloudHSM","AWS Inspector","AWS Trusted Advisor","Amazon Redshift"],"KMS custom key stores integrate with AWS CloudHSM."],
+    ["m4","compliance","A US government agency needs a dedicated AWS offering for government compliance. Which one?",["AWS GovCloud (US)","AWS Artifact","AWS Organizations","Amazon CloudFront"],"AWS GovCloud (US) is the dedicated program for US government compliance."],
+
+    // ---------- Module 5 ----------
+    ["m5","waf","You want a structured way, in the console, to review a workload against the Well-Architected pillars. Which tool?",["AWS Well-Architected Tool","AWS Pricing Calculator","AWS Budgets","AWS Inspector"],"The Well-Architected Tool provides a structured way to review and improve workloads."],
+    ["m5","cost-optimization","You want to visualize past AWS spending and forecast future costs. Which tool?",["AWS Cost Explorer","AWS Artifact","AWS KMS","Amazon CloudFront"],"Cost Explorer visualizes usage and costs over time and forecasts future expenses."],
+    ["m5","cost-optimization","You want an alert when usage or cost exceeds, or is forecast to exceed, a threshold you set. Which tool?",["AWS Budgets","AWS Cost Explorer","AWS Artifact","AWS Inspector"],"AWS Budgets sets custom cost/usage budgets and sends alerts."],
+    ["m5","cost-optimization","You are planning a new project and want to estimate its AWS cost before deploying. Which tool?",["AWS Pricing Calculator","AWS Cost and Usage Report","AWS Trusted Advisor","Amazon CloudWatch"],"The Pricing Calculator estimates costs for planned workloads."],
+    ["m5","scalability-elasticity","Traffic varies through the day and you want EC2 capacity added and removed automatically. Which service?",["Amazon EC2 Auto Scaling","Amazon S3 lifecycle rules","AWS Direct Connect","AWS KMS"],"EC2 Auto Scaling adjusts the number of instances based on demand."],
+    ["m5","ha-ft","You want to distribute incoming traffic across instances in multiple AZs and stop sending traffic to failed ones. Which service?",["Elastic Load Balancing","AWS Backup","AWS CloudFormation","Amazon S3"],"ELB distributes traffic across healthy instances and stops routing to failed ones."],
+    ["m5","ha-ft","DNS should redirect users to a backup resource when the primary one fails. Which service?",["Amazon Route 53","Amazon EBS","AWS Inspector","AWS Backup"],"Route 53 provides DNS failover to backup resources or other Regions."],
+    ["m5","performance-efficiency","You want an in-memory cache to speed up data retrieval and reduce database load. Which service?",["Amazon ElastiCache","AWS Backup","AWS Artifact","Amazon S3 Glacier"],"ElastiCache (Redis or Memcached) provides caching to reduce latency and database load."],
+    ["m5","performance-efficiency","You want recommendations on the right EC2 instance types for your workload. Which tool?",["AWS Compute Optimizer","AWS Artifact","Amazon SNS","AWS Direct Connect"],"Compute Optimizer recommends instance types based on workload usage."],
+    ["m5","performance-efficiency","You want to improve global application performance by routing users to the nearest AWS endpoint. Which service?",["AWS Global Accelerator","AWS Auto Scaling","Amazon EBS","AWS Backup"],"Global Accelerator routes traffic to the nearest AWS endpoints."],
+    ["m5","performance-efficiency","Several EC2 instances need concurrent access to scalable, shared file storage. Which service?",["Amazon EFS","Amazon EBS","Amazon S3 Glacier","Amazon SQS"],"EFS provides scalable, high-performance file storage accessible from multiple EC2 instances at once."],
+
+    // ---------- Module 6 ----------
+    ["m6","console","A new team member prefers a graphical interface to create and monitor AWS resources without using the command line. What do they use?",["AWS Management Console","AWS CLI","AWS SDK","A CloudFormation template"],"The Management Console is the web GUI for managing AWS services."],
+    ["m6","cli","An admin wants to automate repetitive tasks by running aws commands in shell scripts. Which tool?",["AWS CLI","AWS Management Console","AWS Artifact","Amazon Route 53"],"The AWS CLI lets you manage AWS from the terminal and script tasks."],
+    ["m6","sdks","A developer wants to call S3 and DynamoDB from Python application code. Which tool?",["AWS SDK (Boto3)","AWS Management Console","AWS Trusted Advisor","AWS Artifact"],"AWS SDKs let you use AWS services from your programming language; Boto3 is the Python SDK."],
+    ["m6","cloudformation","You want to define infrastructure in a YAML/JSON template so it can be created repeatedly. Which service?",["AWS CloudFormation","Amazon CloudWatch","AWS Inspector","AWS KMS"],"CloudFormation provisions infrastructure as code from templates."],
+    ["m6","cloudwatch","You want to monitor CPU utilization of EC2 instances and set alarms on thresholds. Which service?",["Amazon CloudWatch","AWS CloudFormation","AWS Artifact","AWS Organizations"],"CloudWatch collects metrics and lets you set alarms on them."],
+    ["m6","cloudwatch","You need to query and analyze log data stored in CloudWatch with a query language. Which feature?",["CloudWatch Logs Insights","CloudWatch Dashboards","AWS Cost Explorer","VPC Flow Logs"],"Logs Insights is the integrated tool for querying and analyzing CloudWatch log data."],
+    ["m6","ssm","You need secure shell access to instances without opening inbound ports or managing SSH keys. Which feature?",["Systems Manager Session Manager","VPC peering","An Elastic IP","A security group with port 22 open"],"Session Manager connects over HTTPS, so no inbound ports are needed, and it logs sessions."],
+    ["m6","ssm","You want a central, secure place to store configuration data and secrets with versioning. Which feature?",["Systems Manager Parameter Store","Amazon SQS","AWS Cost Explorer","Amazon S3 Glacier"],"Parameter Store holds configuration and secrets centrally, with versioned parameters."],
+    ["m6","ssm","You want to automate operating-system patching and track patch compliance on your instances. Which feature?",["Systems Manager Patch Manager","AWS Artifact","Amazon Route 53","AWS Budgets"],"Patch Manager schedules patching and monitors patch compliance."],
+    ["m6","cloudformation","Before updating a CloudFormation stack, you want to preview the changes. What do you create?",["A change set","A stack set","A key pair","A placement group"],"Change sets show what will change before you apply an update."],
+
+    // ---------- Module 7 ----------
+    ["m7","route53","You need a scalable DNS service that also supports domain registration and health checks. Which service?",["Amazon Route 53","Amazon CloudFront","AWS Direct Connect","Amazon API Gateway"],"Route 53 offers DNS, domain registration and health checking."],
+    ["m7","cloudfront","A website with users worldwide must serve images and video from edge locations close to viewers. Which service?",["Amazon CloudFront","Amazon Route 53","AWS Direct Connect","Amazon RDS"],"CloudFront is a global CDN that caches content at edge locations."],
+    ["m7","api-gateway","You need a managed front door to publish REST APIs that call Lambda functions. Which service?",["Amazon API Gateway","Amazon CloudFront","AWS Transit Gateway","Amazon SNS"],"API Gateway creates, deploys and manages APIs and integrates with Lambda backends."],
+    ["m7","direct-connect","A company wants a dedicated private network connection between its data center and AWS that bypasses the public internet. Which service?",["AWS Direct Connect","AWS Site-to-Site VPN","Amazon CloudFront","Amazon Route 53"],"Direct Connect provides a dedicated, private connection that avoids the public internet."],
+    ["m7","vpn","A branch office needs an encrypted IPsec tunnel over the internet to a VPC. Which service?",["AWS Site-to-Site VPN","AWS Direct Connect","Amazon CloudFront","Amazon SQS"],"Site-to-Site VPN connects an on-premises network to a VPC over an encrypted tunnel on the internet."],
+    ["m7","vpn","Remote employees need to securely reach VPC resources from their laptops. Which service?",["AWS Client VPN","AWS Direct Connect","Amazon Route 53","AWS Transit Gateway"],"Client VPN lets individual users securely access VPC resources from their devices."],
+    ["m7","transit-gateway","You want a central hub-and-spoke gateway to connect many VPCs and on-premises networks. Which service?",["AWS Transit Gateway","VPC peering","An internet gateway","AWS Shield"],"Transit Gateway acts as a central hub, reducing complex peering and routing."],
+    ["m7","route53","You want Route 53 to send each user to the resource with the lowest latency. Which routing policy?",["Latency-based routing","Weighted routing","Failover routing","Simple routing"],"Latency-based routing directs users to the resource with the lowest latency."],
+    ["m7","cloudfront","You want to run code at edge locations to modify requests, for example A/B testing or adding security headers. Which feature?",["Lambda@Edge","AWS Direct Connect","VPC Flow Logs","RDS Multi-AZ"],"Lambda@Edge runs serverless functions at CloudFront edge locations."],
+    ["m7","cloudfront","You want built-in protection against DDoS attacks for content delivered through CloudFront. Which service?",["AWS Shield","AWS KMS","AWS Backup","AWS Artifact"],"CloudFront includes AWS Shield Standard protection against DDoS attacks."],
+    ["m7","cloudfront","You must block viewers in certain countries from accessing your CloudFront content. Which feature?",["Geo-restriction","Signed URLs","Field-level encryption","Cache invalidation"],"Geo-restriction allows or blocks content by viewer location."]
+  ];
+
+  const EXAM = [
+    // ---------- Module 1 ----------
+    ["m1","deployment-models","A bank must keep customer records on hardware it controls and support legacy systems, but also wants cheap rented capacity for dev/test. A pure private cloud is costly and less scalable; a pure public cloud is less customizable. Which model fits best?",["Hybrid cloud","Public cloud","Private cloud","SaaS"],"Hybrid keeps critical data private while using the public cloud for dev/test, balancing control, scalability and cost."],
+    ["m1","shared-resp","An auditor asks who is responsible for what when you run a database on EC2. Which split is correct?",["AWS: data centers, hardware, Regions and AZs. You: guest OS patching, database configuration, data and IAM.","AWS: guest OS patching and database configuration. You: physical hardware and Regions.","AWS: IAM and data protection. You: Availability Zones and edge locations.","AWS: everything, including protection of your data."],"AWS secures the infrastructure ('of' the cloud); customers secure what they put 'in' it: guest OS, databases, applications, data and IAM."],
+    ["m1","global-infra","You must tolerate the loss of a single data center's power, while avoiding the extra latency and complexity of a cross-Region setup. Which design?",["Replicas in multiple AZs within one Region","Replicas in a second Region only","One AZ with a larger instance","Caching everything at edge locations"],"AZs have independent power, cooling and networking inside a Region; multi-Region deployments add latency and complexity."],
+
+    // ---------- Module 2 ----------
+    ["m2","sqs","An order system sends about 200 orders per second to workers. Each order must be processed exactly once and in the order sent, with producers and workers decoupled. What fits?",["SQS FIFO queue","SQS Standard queue","SNS Standard topic","Kinesis Data Firehose"],"FIFO queues give exactly-once, ordered processing (300 TPS per queue by default, 3,000 with batching). Standard queues only offer best-effort ordering and at-least-once delivery."],
+    ["m2","sns","One 'order placed' event must reach customers by email and SMS and also be buffered for three back-end microservices that process at their own pace. Which design?",["An SNS topic with email/SMS endpoints and SQS queues as subscribers","A single SQS queue shared by every consumer","A Lambda function polling an S3 bucket","A CloudWatch dashboard"],"SNS pushes one published message to every subscriber (email, SMS, SQS); each SQS queue then buffers messages for pull-based consumers."],
+    ["m2","rds","A relational database has a heavy read load and must also fail over automatically if its Availability Zone is lost. Which combination covers both needs?",["Read replicas plus a Multi-AZ deployment","Multi-AZ deployment only","Read replicas only","Simply increasing the storage size"],"Read replicas offload read queries; Multi-AZ replicates synchronously to a standby in another AZ and promotes it on failure. Each solves only one of the two needs."],
+    ["m2","vpc","App servers in a private subnet must download OS updates, but nothing on the internet may initiate connections to them. What is the right design?",["A NAT gateway in a public subnet, with the private subnet routed through it","Move the servers to a public subnet with Elastic IPs","VPC peering to a public VPC","Attach a VPN gateway"],"NAT lets private-subnet resources reach out through a public subnet and internet gateway without being directly reachable from the internet."],
+    ["m2","vpc","You want an additional stateless layer of filtering that applies to every instance in a subnet, independent of each instance's own firewall rules. What do you use?",["A network ACL","A security group","An Elastic IP","A route table"],"NACLs are stateless firewalls at subnet level; security groups are virtual firewalls at the instance level."],
+    ["m2","ec2","A job runs every Monday from 2 to 4 AM, must not be interrupted, and the schedule never changes. Which EC2 pricing option fits best?",["Scheduled Reserved Instances","Spot Instances","Standard Reserved Instances","On-Demand Instances"],"Scheduled RIs match capacity to a predictable recurring schedule that needs only a fraction of a day, week or month. Spot can be interrupted; Standard RIs suit steady-state workloads."],
+    ["m2","ec2","A steady-state workload is committed for three years, but the team may need to change instance attributes later and accepts a smaller discount than the maximum. Which option?",["Convertible Reserved Instances","Standard Reserved Instances","Spot Instances","Scheduled Reserved Instances"],"Convertible RIs (up to 54% off) allow exchanging attributes for equal or greater value; Standard RIs give up to 75% off."],
+    ["m2","s3","Logs must be kept, but nobody reads them after 90 days. You want storage costs to drop automatically without manual work. What do you configure?",["An S3 lifecycle policy that transitions objects to Glacier","S3 versioning","A second EBS volume","An SNS topic subscription"],"Lifecycle rules automatically move data between storage classes (for example to Glacier) or delete it after a set period."],
+    ["m2","s3","Users keep accidentally overwriting or deleting important objects in a bucket. Which S3 feature lets you recover earlier copies?",["Versioning","Lifecycle policies","Transfer Acceleration","Bucket naming rules"],"Versioning keeps multiple versions of an object to protect against accidental overwrites and deletions."],
+    ["m2","sqs","A pipeline must pass 5 MB payloads between services through a queue, but SQS messages are limited to 256 KB. What is the recommended approach?",["Store the payload in S3 and send a reference in the SQS message","Raise the SQS message limit to 5 MB","Switch to SNS, which has a larger limit","Use a FIFO queue to enlarge messages"],"SQS and SNS both cap messages at 256 KB; larger payloads go to Amazon S3 with a pointer in the message."],
+    ["m2","vpc","Two VPCs in different Regions need private communication, and there are only two of them. What is the simplest option?",["VPC peering","An internet gateway on each VPC","A NAT gateway","Elastic IPs on all instances"],"VPC peering enables private communication between two VPCs in the same or different Regions."],
+    ["m2","sqs","Messages must be stored for several days so consumers can pull them whenever they are ready, and undelivered messages must not simply disappear. Which service fits?",["Amazon SQS","Amazon SNS","Amazon CloudFront","Amazon Route 53"],"SQS retains messages for up to 14 days for later pulling; SNS does not store messages indefinitely and discards them once delivered or undeliverable."],
+
+    // ---------- Module 3 ----------
+    ["m3","kinesis","A company ingests millions of IoT sensor records per second and wants its own consumers (Lambda or EC2 apps) to process them in real time across shards. Which service?",["Kinesis Data Streams","Kinesis Data Firehose","Amazon S3 Glacier","Amazon RDS"],"Data Streams organizes data into shards and lets custom consumers process records in real time; Firehose is for delivery to stores."],
+    ["m3","kinesis","Application logs stream in continuously and should simply land in S3 and Redshift with no custom consumer code. Which service?",["Kinesis Data Firehose","Kinesis Data Streams","Kinesis Video Streams","Amazon EMR"],"Firehose automatically delivers streaming data to destinations such as S3 and Redshift."],
+    ["m3","dynamodb","A game leaderboard must handle spiky traffic of millions of requests per second with single-digit-millisecond latency and a flexible schema, with no servers to manage. Best data store?",["Amazon DynamoDB","Amazon RDS","Amazon Redshift","Amazon EMR"],"DynamoDB is fully managed, scales automatically and offers single-digit-millisecond key-value/document access; RDS and Redshift are not built for this pattern."],
+    ["m3","dynamodb","Items include 5 MB documents, but DynamoDB limits an item to 400 KB. How should you store them?",["Documents in S3, metadata in DynamoDB","Everything in DynamoDB using a bigger table","Documents in SQS, metadata in SNS","Documents in Glacier, metadata in Kinesis"],"The notes recommend keeping large data in S3 and using DynamoDB for the metadata."],
+    ["m3","redshift","Analysts run complex SQL joins and aggregations over years of historical data measured in petabytes. Which service?",["Amazon Redshift","Amazon DynamoDB","Amazon RDS","Amazon SQS"],"Redshift is a petabyte-scale SQL data warehouse; DynamoDB lacks SQL-style joins and aggregations."],
+    ["m3","emr","A team already has Apache Spark and Hadoop jobs and wants managed clusters that can use Spot Instances to cut the cost of batch runs. Which service?",["Amazon EMR","Amazon Redshift","Amazon DynamoDB","AWS Lambda"],"EMR provisions and manages Hadoop/Spark clusters and can use Spot Instances and transient clusters."],
+    ["m3","lambda","A video-processing step takes about 40 minutes per file and is triggered by uploads. Which managed choice avoids Lambda's limits?",["ECS tasks on Fargate","AWS Lambda","Amazon SNS","Amazon SQS"],"Lambda functions time out after 15 minutes; ECS with Fargate runs containers without server management."],
+    ["m3","ecs","A team running containers needs control over the underlying hosts (instance choice and configuration). Which ECS approach fits?",["ECS using EC2 instances","ECS using Fargate","AWS Lambda","Amazon S3"],"ECS on EC2 gives more control; Fargate is serverless and removes host management."],
+    ["m3","glacier","Archived medical records are rarely needed, but in an emergency a record must be retrievable within minutes and cost is secondary. Which Glacier retrieval option?",["Expedited","Standard","Bulk","Cross-Region Replication"],"Expedited is fastest (minutes) but most expensive; Standard takes hours; Bulk takes 12+ hours."],
+    ["m3","dr-backup","On-premises servers must be recoverable in AWS within minutes using continuous replication, with non-disruptive recovery drills. Which service?",["AWS Elastic Disaster Recovery","AWS Backup","Amazon S3 Glacier","AWS Trusted Advisor"],"Elastic Disaster Recovery uses real-time replication with test launches; AWS Backup automates scheduled backups rather than continuous replication."],
+    ["m3","dynamodb","Users on three continents need low-latency reads of the same NoSQL data, and the data must survive a Regional outage. What do you use?",["DynamoDB Global Tables","DynamoDB Local Secondary Index","RDS Multi-AZ","Kinesis Data Streams"],"Global Tables replicate data across Regions for low-latency reads and disaster recovery."],
+    ["m3","dynamodb","Whenever an item in a DynamoDB table changes, some code must run automatically. Which pairing?",["DynamoDB Streams with AWS Lambda","DynamoDB Global Tables with EMR","Kinesis Video Streams with Redshift","On-demand backup with Glacier"],"Streams capture item changes in real time and can trigger Lambda functions."],
+
+    // ---------- Module 4 ----------
+    ["m4","iam","An application on EC2 must read from S3. Security forbids storing long-term access keys in code or on disk. What should you use?",["An IAM role attached to the instance","An IAM user with embedded access keys","Root account credentials","A wider security group"],"Roles give services such as EC2 temporary credentials, so no long-term credentials are exposed."],
+    ["m4","organizations","A company with 40 AWS accounts must stop every development account from using certain Regions and services, even if local admins grant permissions. What should it use?",["SCPs applied to the OU in AWS Organizations","IAM policies edited in each account","Trusted Advisor checks","KMS key policies"],"SCPs set organization-level guardrails that all accounts in the OU inherit."],
+    ["m4","kms","Regulations require cryptographic keys to live in a dedicated hardware security module you control, while still encrypting S3 and EBS data. What do you configure?",["A KMS custom key store backed by CloudHSM","Default KMS keys only","IAM access keys","AWS Inspector"],"KMS integrates with AWS CloudHSM so keys can be created and managed in your own HSM."],
+    ["m4","kms","An investigator must find out which principal used a specific encryption key last Tuesday. Which service provides this record?",["AWS CloudTrail","AWS Trusted Advisor","AWS Inspector","AWS Artifact"],"CloudTrail logs all API requests to KMS, enabling audits of key usage."],
+    ["m4","inspector","Security wants agent-based assessments of EC2 instances that report vulnerabilities and best-practice deviations, ranked by severity. Which service?",["AWS Inspector","AWS Trusted Advisor","AWS Organizations","AWS Artifact"],"Inspector assesses instance behavior and configuration. Trusted Advisor performs account-level best-practice checks across five categories instead."],
+    ["m4","trusted-advisor","An account review needs one dashboard flagging idle resources (cost), open security groups (security), missing Multi-AZ (fault tolerance) and nearing service limits. Which service?",["AWS Trusted Advisor","AWS Inspector","AWS KMS","AWS CloudTrail"],"Trusted Advisor runs checks in cost optimization, security, fault tolerance, performance and service limits."],
+    ["m4","compliance","A customer's auditor requests AWS's own ISO and SOC audit reports on demand. Where do you get them?",["AWS Artifact","AWS CloudTrail","AWS Inspector","AWS Config"],"AWS Artifact is the self-service portal for AWS audit reports and compliance certifications."],
+    ["m4","iam","Employees should sign in to AWS with their existing corporate Active Directory identities instead of separate AWS users. Which IAM capability?",["Federation / SSO with SAML","Resource-based policies","Access key rotation","Security groups"],"IAM supports federation with corporate directories and identity providers (for example Active Directory, SAML) for single sign-on."],
+
+    // ---------- Module 5 ----------
+    ["m5","scalability-elasticity","A retailer's traffic spikes for a few hours during sales and then drops. The company wants to avoid paying for idle capacity. Which approach?",["EC2 Auto Scaling (elasticity)","A permanently larger instance","Three-year Standard RIs sized for peak","A Dedicated Host"],"Elasticity adds and removes resources automatically as demand changes, avoiding over-provisioning."],
+    ["m5","scalability-elasticity","A stateful application cannot easily be distributed across multiple instances and needs more capacity. Which scaling approach?",["Vertical scaling (a larger instance)","Horizontal scaling behind a load balancer","Spot Instances","AWS Lambda"],"Vertical scaling suits workloads that cannot be easily distributed; horizontal scaling suits stateless web or microservice tiers."],
+    ["m5","ha-ft","A web tier must keep serving users if an Availability Zone is lost, and unhealthy instances must be replaced automatically. Which design?",["Instances across multiple AZs behind ELB, in an Auto Scaling group","Many instances in one AZ behind ELB","One large instance with EBS snapshots","One instance with an Elastic IP"],"ELB routes only to healthy instances across AZs and Auto Scaling launches replacements, so there is no single point of failure."],
+    ["m5","cost-optimization","Compute usage is steady and predictable for three years, and the team wants a discount (up to 72%) while keeping the most flexibility. Which option?",["Compute Savings Plans","Spot Instances","On-Demand pricing","Dedicated Hosts"],"Savings Plans exchange a usage commitment for savings and are more flexible than Reserved Instances; Compute Savings Plans are the most flexible type."],
+    ["m5","cost-optimization","A regulation demands physical server isolation from other AWS customers. Which purchasing option?",["Dedicated Hosts","Spot Instances","Savings Plans","Free Tier"],"Dedicated Hosts are physical servers dedicated to you, meeting isolation and compliance requirements."],
+    ["m5","ha-ft","If the primary Region's endpoint fails its health checks, users should automatically be sent to a standby Region. Which service and policy?",["Route 53 with failover routing","CloudFront with signed URLs","Direct Connect","SQS FIFO"],"Route 53 health checks plus failover routing redirect traffic to a backup resource or Region."],
+    ["m5","design-principles","A web tier hands work to a back end that does not need to reply immediately; an acknowledgement that the request was registered is enough, and spikes must not overwhelm the back end. Which design?",["Asynchronous integration through a durable queue (SQS)","Synchronous direct REST calls","A shared local disk on one EC2 instance","Larger instances only"],"Components that don't need an immediate response should integrate through an intermediate durable storage layer, such as a queue."],
+    ["m5","cost-optimization","Finance wants an automatic notification when forecasted spend will exceed the monthly limit. Which service?",["AWS Budgets","AWS Cost Explorer","AWS Artifact","Amazon CloudWatch Logs"],"Budgets alerts when usage or cost exceeds, or is forecast to exceed, the budget; Cost Explorer is for visualizing and analyzing costs."],
+
+    // ---------- Module 6 ----------
+    ["m6","cloudformation","A team needs identical dev, staging and prod environments defined in version-controlled templates, with automatic rollback if creation fails. Which service?",["AWS CloudFormation","Clicking through the Management Console","One-off AWS CLI commands","Amazon CloudWatch"],"CloudFormation provides repeatable infrastructure as code, supports version control, and automatically rolls back failed operations."],
+    ["m6","cloudformation","Before applying a template update to a production stack, the team wants to see exactly which resources will be created, changed or deleted. What do they use?",["Change sets","Drift detection","StackSets","Nested stacks"],"Change sets preview the effects of an update before you approve and apply it."],
+    ["m6","cloudformation","An engineer edited a security group directly in the console, and the team wants to know whether the stack still matches its template. Which feature?",["Drift detection","Change sets","StackSets","Outputs and exports"],"Drift detection finds changes made to stack resources outside CloudFormation."],
+    ["m6","cloudformation","The same stack must be deployed to several AWS accounts and Regions at once. Which feature?",["StackSets","Nested stacks","Change sets","Drift detection"],"StackSets manage the same stack across multiple accounts and Regions."],
+    ["m6","ssm","Operations must patch 500 EC2 and on-premises servers on a schedule, run commands at scale and avoid open SSH/RDP ports, with an audit trail. Which service?",["AWS Systems Manager","AWS Inspector","AWS CloudFormation","AWS Trusted Advisor"],"Patch Manager, Run Command and Session Manager cover patching, remote commands and port-free access; the SSM Agent must be installed."],
+    ["m6","cloudwatch","When average CPU stays above 80%, the platform should scale out automatically and notify the on-call engineer. Which combination?",["A CloudWatch alarm triggering Auto Scaling and SNS","A CloudTrail event with Glacier","Trusted Advisor with Artifact","VPC Flow Logs with KMS"],"Alarms trigger on metric thresholds and can start Auto Scaling actions or send SNS notifications."],
+    ["m6","cloudwatch","Operations wants automated scripts that simulate user interactions with a website to detect availability problems before real customers notice. Which feature?",["CloudWatch Synthetics","CloudWatch Logs Insights","CloudWatch Dashboards","Anomaly detection on CPU"],"CloudWatch Synthetics runs automated tests that simulate user interactions to detect performance or availability issues."],
+    ["m6","ssm","An admin must run the same shell script on hundreds of instances at once, remotely and with an audit trail, without logging in to each one. Which feature?",["Systems Manager Run Command","Systems Manager Session Manager","EBS snapshots","Route 53 health checks"],"Run Command executes commands across large groups of instances without SSH/RDP; Session Manager is for secure interactive connections."],
+
+    // ---------- Module 7 ----------
+    ["m7","route53","A global app runs in three Regions. Each user should be sent to whichever Region responds fastest for them. Which Route 53 routing policy?",["Latency-based routing","Geolocation routing","Weighted routing","Failover routing"],"Latency-based routing picks the lowest-latency resource; geolocation routes by the user's location, not by measured latency."],
+    ["m7","route53","You want to release a new version to 10% of users while 90% stay on the old one, adjusting the split gradually. Which policy?",["Weighted routing","Failover routing","Latency-based routing","Simple routing"],"Weighted routing distributes traffic across resources by predefined weights."],
+    ["m7","route53","Users in Germany must always be served from the Frankfurt endpoint for data-residency reasons. Which policy?",["Geolocation routing","Latency-based routing","Weighted routing","Failover routing"],"Geolocation routes by the user's geographic location, guaranteeing region-specific answers; latency-based routing might choose a different Region."],
+    ["m7","direct-connect","A trading firm needs consistent, low-latency, high-bandwidth (for example 10 Gbps) connectivity to AWS that must not traverse the public internet. Which option?",["AWS Direct Connect","AWS Site-to-Site VPN","AWS Client VPN","Amazon CloudFront"],"Direct Connect is a dedicated private link with predictable performance; a VPN rides the public internet and has lower throughput."],
+    ["m7","vpn","A branch office needs a quick, low-cost encrypted connection to a VPC for a short-term project; high throughput is not required. Which option?",["AWS Site-to-Site VPN","AWS Direct Connect","AWS Transit Gateway alone","Amazon API Gateway"],"Site-to-Site VPN is a cost-effective, quick-to-set-up encrypted connection, ideal for short-term or temporary connectivity."],
+    ["m7","transit-gateway","A company has 30 VPCs plus on-premises networks, and a mesh of peering connections has become unmanageable. What simplifies it?",["AWS Transit Gateway","More VPC peering connections","An internet gateway per VPC","Elastic IPs"],"Transit Gateway is a central hub-and-spoke gateway that replaces numerous peering connections."],
+    ["m7","api-gateway","A mobile app calls REST endpoints backed by Lambda. The team needs request throttling, API keys, response caching and dev/prod deployment stages. Which service?",["Amazon API Gateway","Amazon CloudFront","Elastic Load Balancing","Amazon Route 53"],"API Gateway provides throttling, API keys, caching and staged deployments in front of Lambda or other backends."],
+    ["m7","cloudfront","A paid video library delivered through CloudFront should be viewable only by logged-in subscribers, using temporary access. Which feature?",["Signed URLs or signed cookies","Geo-restriction","AWS Shield","Field-level encryption"],"Signed URLs and signed cookies grant temporary access to specific users."]
+  ];
+
+  const toQ = (a, level) => ({m:a[0], ref:a[1], q:a[2], o:a[3], w:a[4], level});
+  const BANK = {practice: PRACTICE.map(a => toQ(a,'practice')), exam: EXAM.map(a => toQ(a,'exam'))};
+  window.__QUIZ_BANK__ = BANK; // exposed for linting / editing in the console
+
+  const root = document.getElementById('quizApp');
+  if (!root) return;
+  const S = {mode:'practice', mods:new Set(Object.keys(MODS)), qs:[], i:0, view:'start', onlyMissed:false};
+
+  function shuffle(a){ a = a.slice(); for (let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+  function el(tag, cls, text){ const e=document.createElement(tag); if(cls) e.className=cls; if(text!=null) e.textContent=text; return e; }
+  function prepare(row){ const opts=shuffle(row.o); return {row, opts, ans:opts.indexOf(row.o[0]), picked:null, flag:false}; }
+  function pool(){ return BANK[S.mode].filter(r => S.mods.has(r.m)); }
+  function score(){ return S.qs.filter(q => q.picked===q.ans).length; }
+  function answered(){ return S.qs.filter(q => q.picked!==null).length; }
+  function bestKey(m){ return 'aws-quiz-best-' + m; }
+  function getBest(m){ try { const v=JSON.parse(localStorage.getItem(bestKey(m))); return (v && v.t) ? v : null; } catch(e){ return null; } }
+  function setBest(m, s, t){ try { localStorage.setItem(bestKey(m), JSON.stringify({s, t})); } catch(e){} }
+  function ensureTop(){ const r=root.getBoundingClientRect(); if (r.top < 60 || r.top > window.innerHeight*0.6) root.scrollIntoView({block:'start'}); }
+
+  function start(rows){ S.qs = rows.map(prepare); S.i = 0; S.onlyMissed = false; viewQ(); ensureTop(); }
+  function newQuiz(){ start(shuffle(pool()).slice(0, NUM)); }
+
+  /* ---------------- start screen ---------------- */
+  function viewStart(){
+    S.view = 'start'; root.replaceChildren();
+    root.append(el('h3', null, 'Choose your mode'));
+    root.append(el('p', 'quiz__sub', 'Pick a mode, optionally narrow the modules, then start. Each attempt draws up to ' + NUM + ' fresh questions.'));
+    const modes = el('div', 'quiz__modes');
+    [['practice','Practice','Easier, direct-recognition scenarios. You see right or wrong, plus an explanation, right after every answer.'],
+     ['exam','Exam','A separate, harder pool where several services look plausible. No feedback until you submit; you can change answers and flag questions.']
+    ].forEach(([k,t,d]) => {
+      const b = el('button', 'quiz__mode' + (S.mode===k ? ' is-on' : '')); b.type='button'; b.setAttribute('aria-pressed', String(S.mode===k));
+      b.append(el('span','quiz__mode-t',t), el('span','quiz__mode-d',d));
+      b.addEventListener('click', () => { S.mode = k; viewStart(); });
+      modes.append(b);
+    });
+    root.append(modes);
+
+    const fs = el('fieldset', 'quiz__mods'); fs.append(el('legend', null, 'Modules'));
+    const info = el('p', 'quiz__info'); const go = el('button', 'quiz__btn', 'Start quiz'); go.type='button';
+    function upd(){
+      const n = pool().length;
+      info.textContent = n ? ('Question pool: ' + n + ' · this quiz: ' + Math.min(NUM, n) + ' questions' + (n < NUM ? ' (fewer than ' + NUM + ' available for this selection)' : '')) : 'No questions for this selection. Select at least one module.';
+      go.disabled = !n;
+    }
+    Object.keys(MODS).forEach(k => {
+      const lab = el('label', 'quiz__chk'); const cb = el('input'); cb.type='checkbox'; cb.checked = S.mods.has(k);
+      cb.addEventListener('change', () => { cb.checked ? S.mods.add(k) : S.mods.delete(k); upd(); });
+      lab.append(cb, document.createTextNode(k.toUpperCase() + ' · ' + MODS[k])); fs.append(lab);
+    });
+    root.append(fs, info, go);
+    go.addEventListener('click', newQuiz);
+    upd();
+    const bp = getBest('practice'), be = getBest('exam');
+    if (bp || be) root.append(el('p', 'quiz__best', 'Best scores — Practice: ' + (bp ? bp.s + '/' + bp.t : '–') + ' · Exam: ' + (be ? be.s + '/' + be.t : '–')));
+  }
+
+  /* ---------------- question screen ---------------- */
+  function viewQ(focus){
+    S.view = 'q'; const exam = S.mode==='exam'; const q = S.qs[S.i]; const last = S.i === S.qs.length-1;
+    root.replaceChildren();
+
+    const top = el('div', 'quiz__top');
+    top.append(el('span', 'quiz__badge quiz__badge--' + S.mode, exam ? 'Exam' : 'Practice'));
+    top.append(el('span', null, 'Question ' + (S.i+1) + ' of ' + S.qs.length));
+    top.append(el('span', 'quiz__answered', exam ? answered() + ' answered' : 'Correct so far: ' + score()));
+    root.append(top);
+    const bar = el('div', 'quiz__bar'); const fill = el('span'); fill.style.width = ((S.i + (q.picked!==null && !exam ? 1 : 0)) / S.qs.length * 100) + '%'; bar.append(fill); root.append(bar);
+
+    if (exam) {
+      const nav = el('div', 'quiz__nav'); nav.setAttribute('aria-label', 'Question navigator');
+      S.qs.forEach((x, n) => {
+        const d = el('button', 'quiz__dot' + (x.picked!==null ? ' is-ans' : '') + (x.flag ? ' is-flag' : '') + (n===S.i ? ' is-cur' : ''), String(n+1)); d.type='button';
+        d.setAttribute('aria-label', 'Go to question ' + (n+1) + (x.picked!==null ? ', answered' : ', unanswered') + (x.flag ? ', flagged' : ''));
+        d.addEventListener('click', () => { S.i = n; viewQ('q'); });
+        nav.append(d);
+      });
+      root.append(nav);
+    }
+
+    const qe = el('p', 'quiz__q', q.row.q); qe.tabIndex = -1; root.append(qe);
+
+    const locked = !exam && q.picked !== null;
+    const list = el('div', 'quiz__opts'); list.setAttribute('role', 'group'); list.setAttribute('aria-label', 'Answer options');
+    q.opts.forEach((t, k) => {
+      const b = el('button', 'quiz__opt'); b.type = 'button';
+      b.append(el('span', 'quiz__key', 'ABCD'[k]), el('span', 'quiz__opt-t', t));
+      if (exam) { if (q.picked === k) { b.classList.add('is-picked'); } b.setAttribute('aria-pressed', String(q.picked === k)); }
+      if (locked) {
+        b.setAttribute('aria-disabled', 'true');
+        if (k === q.ans) { b.classList.add('is-correct'); b.append(el('span', 'quiz__mark', '✓')); }
+        else if (k === q.picked) { b.classList.add('is-wrong'); b.append(el('span', 'quiz__mark', '✗')); }
+        else b.classList.add('is-dim');
+      }
+      b.addEventListener('click', () => choose(k));
+      list.append(b);
+    });
+    root.append(list);
+
+    let nextBtn = null;
+    if (locked) {
+      const ok = q.picked === q.ans;
+      const fb = el('div', 'quiz__fb ' + (ok ? 'quiz__fb--ok' : 'quiz__fb--bad')); fb.setAttribute('role', 'status');
+      fb.append(el('strong', null, ok ? 'Correct.' : 'Not quite. The best answer is: ' + q.opts[q.ans]));
+      fb.append(el('p', null, q.row.w));
+      const a = el('a', null, 'Review in the notes →'); a.href = '#' + q.row.ref; fb.append(a);
+      root.append(fb);
+    }
+
+    const ctl = el('div', 'quiz__ctl');
+    if (exam) {
+      const prev = el('button', 'quiz__btn quiz__btn--ghost', '← Previous'); prev.type='button'; prev.disabled = S.i === 0;
+      prev.addEventListener('click', () => { S.i--; viewQ('q'); ensureTop(); });
+      const flag = el('button', 'quiz__btn quiz__btn--ghost quiz__btn--flag' + (q.flag ? ' is-on' : ''), q.flag ? '⚑ Flagged' : '⚐ Flag for review'); flag.type='button'; flag.setAttribute('aria-pressed', String(q.flag));
+      flag.addEventListener('click', () => { q.flag = !q.flag; viewQ('flag'); });
+      ctl.append(prev, flag, el('span', 'quiz__spacer'));
+      nextBtn = el('button', 'quiz__btn', last ? 'Submit exam (' + (S.qs.length - answered()) + ' unanswered)' : 'Next →'); nextBtn.type='button';
+      ctl.append(nextBtn);
+    } else if (locked) {
+      nextBtn = el('button', 'quiz__btn', last ? 'See results' : 'Next question →'); nextBtn.type='button'; ctl.append(nextBtn);
+    }
+    if (nextBtn) nextBtn.addEventListener('click', next);
+    if (ctl.childNodes.length) root.append(ctl);
+
+    const quit = el('button', 'quiz__btn quiz__btn--ghost', 'Quit'); quit.type='button'; quit.style.marginTop = '14px';
+    quit.addEventListener('click', viewStart); root.append(quit);
+
+    if (focus === 'q') qe.focus({preventScroll:true});
+    else if (focus === 'flag') { const f = root.querySelector('.quiz__btn--flag'); if (f) f.focus({preventScroll:true}); }
+    else if (typeof focus === 'number') { const o = root.querySelectorAll('.quiz__opt')[focus]; if (o) o.focus({preventScroll:true}); }
+    else if (focus === 'next' && nextBtn) nextBtn.focus({preventScroll:true});
+  }
+
+  function choose(k){
+    const q = S.qs[S.i];
+    if (S.mode === 'exam') { q.picked = (q.picked === k) ? null : k; viewQ(k); }
+    else { if (q.picked !== null) return; q.picked = k; viewQ('next'); }
+  }
+  function next(){
+    if (S.i < S.qs.length - 1) { S.i++; viewQ('q'); ensureTop(); }
+    else finish();
+  }
+  function finish(){
+    const s = score(), t = S.qs.length, b = getBest(S.mode);
+    S.newBest = !b || (s / t) > (b.s / b.t);
+    if (S.newBest) setBest(S.mode, s, t);
+    viewResults(); ensureTop();
+  }
+
+  /* ---------------- results screen ---------------- */
+  function viewResults(){
+    S.view = 'results'; root.replaceChildren();
+    const s = score(), t = S.qs.length, pct = Math.round(s / t * 100);
+    const verdict = pct >= 90 ? 'Excellent: you know which service fits which job.' : pct >= 70 ? 'Good work. Review the missed ones below to close the gaps.' : pct >= 50 ? 'Getting there. Re-read the linked notes for the ones you missed.' : 'Time to revisit the notes. Start with the sections linked below.';
+    root.append(el('h3', null, (S.mode === 'exam' ? 'Exam' : 'Practice') + ' results'));
+    const sc = el('div', 'quiz__score'); sc.append(el('span', 'quiz__score-n', s + ' / ' + t), el('span', 'quiz__score-p', pct + '%' + (S.newBest ? ' · new best!' : '')));
+    root.append(sc, el('p', 'quiz__verdict', verdict));
+
+    const missed = S.qs.filter(q => q.picked !== q.ans);
+    const ctl = el('div', 'quiz__ctl');
+    const again = el('button', 'quiz__btn', 'New ' + t + '-question quiz'); again.type='button'; again.addEventListener('click', newQuiz);
+    const retry = el('button', 'quiz__btn quiz__btn--ghost', 'Retry missed only (' + missed.length + ')'); retry.type='button'; retry.disabled = !missed.length;
+    retry.addEventListener('click', () => start(shuffle(missed.map(q => q.row))));
+    const home = el('button', 'quiz__btn quiz__btn--ghost', 'Change mode / modules'); home.type='button'; home.addEventListener('click', viewStart);
+    ctl.append(again, retry, home); root.append(ctl);
+
+    const head = el('div', 'quiz__rev-h'); head.append(el('h4', null, 'Review'));
+    const lab = el('label', 'quiz__chk'); const cb = el('input'); cb.type='checkbox'; cb.checked = S.onlyMissed;
+    lab.append(cb, document.createTextNode('Show only questions I missed')); head.append(lab); root.append(head);
+    const list = el('div'); root.append(list);
+    function paint(){
+      list.replaceChildren();
+      S.qs.forEach((q, n) => {
+        const ok = q.picked === q.ans; if (S.onlyMissed && ok) return;
+        const card = el('article', 'quiz__rev quiz__rev--' + (ok ? 'ok' : 'bad'));
+        card.append(el('span', 'quiz__rev-n', (ok ? '✓ ' : '✗ ') + 'Question ' + (n+1) + ' · ' + q.row.m.toUpperCase() + ' ' + MODS[q.row.m]));
+        card.append(el('p', null, q.row.q));
+        if (!ok) card.append(el('p', 'quiz__ya', 'Your answer: ' + (q.picked === null ? 'not answered' : q.opts[q.picked])));
+        card.append(el('p', 'quiz__ca', 'Best answer: ' + q.opts[q.ans]));
+        card.append(el('p', null, q.row.w));
+        const a = el('a', null, 'Review in the notes →'); a.href = '#' + q.row.ref; card.append(a);
+        list.append(card);
+      });
+      if (!list.childNodes.length) list.append(el('p', 'quiz__sub', 'Nothing missed. Perfect run!'));
+    }
+    cb.addEventListener('change', () => { S.onlyMissed = cb.checked; paint(); });
+    paint();
+  }
+
+  /* ---------------- keyboard shortcuts (only while focus is inside the quiz) ---------------- */
+  root.addEventListener('keydown', e => {
+    if (S.view !== 'q' || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.target && e.target.tagName === 'INPUT') return;
+    if (/^[1-4]$/.test(e.key)) { choose(+e.key - 1); e.preventDefault(); }
+    else if (e.key === 'ArrowRight') {
+      const q = S.qs[S.i];
+      if (S.mode === 'exam' || q.picked !== null) { next(); e.preventDefault(); }
+    }
+    else if (e.key === 'ArrowLeft' && S.mode === 'exam' && S.i > 0) { S.i--; viewQ('q'); e.preventDefault(); }
+  });
+
+  viewStart();
+})();
 </script>
 </body>
 </html>
