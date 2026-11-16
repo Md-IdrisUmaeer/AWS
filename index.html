@@ -1970,6 +1970,9 @@ footer{max-width:760px; padding:20px 0 60px; font-family:var(--mono); font-size:
         <div class="card"><h4>Cost Optimization</h4><p>Delivering business value at the lowest price point. 5 principles: implement cloud financial management, adopt a consumption model, measure overall efficiency, stop spending on undifferentiated heavy lifting, analyze and attribute expenditure.</p></div>
         <div class="card"><h4>Sustainability</h4><p>Long-term environmental/economic/societal impact. 6 principles: understand your impact, establish sustainability goals, maximize utilization, adopt more efficient hardware/software, use managed services, reduce downstream impact.</p></div>
       </div>
+    
+      <div class="subhead">How the framework works (notes)</div>
+      <p style="font-size:14.5px; color:var(--ink-soft);">Regular <strong>architecture reviews</strong> · a set of <strong>questions per pillar</strong> to spot risks · the <strong>Well-Architected Tool</strong> in the Management Console gives a structured review · <strong>continuous improvement</strong> by reviewing and adjusting regularly. <strong>Advantages:</strong> improved security, enhanced performance, cost savings, increased reliability, operational excellence. <strong>Challenges:</strong> complexity for large workloads, resource-intensive, continuous monitoring, balancing trade-offs (e.g. cost vs performance).</p>
     </section>
 
     <!-- ============ 5.2 DESIGN PRINCIPLES ============ -->
@@ -2020,6 +2023,11 @@ footer{max-width:760px; padding:20px 0 60px; font-family:var(--mono); font-size:
         <div class="card"><h4>Horizontal</h4><p>Add more resources side-by-side.</p></div>
         <div class="card"><h4>Diagonal</h4><p>A mix of both — resources scale vertically and horizontally together.</p></div>
       </div>
+    
+      <div class="subhead">From the notes: definitions, services, best practices</div>
+      <p style="font-size:14.5px; color:var(--ink-soft);"><strong>Scalability</strong> = handle increasing load by adding resources while maintaining performance. <strong>Elasticity</strong> = automatically increase <em>or decrease</em> resources as demand changes (automatic adjustment · cost-efficiency · rapid scaling). <strong>Vertical</strong> e.g. t2.micro → m5.large (workloads hard to distribute); <strong>horizontal</strong> e.g. more EC2 instances behind an ELB (web servers, microservices).<br><br>
+      <strong>Scalability services:</strong> EC2 Auto Scaling, ELB, RDS (read replicas, Multi-AZ), S3, Lambda. <strong>Elasticity services:</strong> AWS Auto Scaling (EC2, DynamoDB), Lambda, ECS and EKS, Elastic Beanstalk.<br><br>
+      <strong>Best practices:</strong> design for horizontal scaling (stateless apps, distributed data stores) · implement Auto Scaling · monitor with CloudWatch · use managed services (Lambda, RDS, S3) · load-test for scalability.</p>
     </section>
 
     <!-- ============ 5.4 HA & FAULT TOLERANCE ============ -->
@@ -2051,6 +2059,15 @@ footer{max-width:760px; padding:20px 0 60px; font-family:var(--mono); font-size:
         <p><strong>Resilience:</strong> <strong>AWS Lambda + API Gateway</strong> give a serverless, auto-scaling layer that avoids single points of failure.</p>
         <p><strong>Testing &amp; monitoring:</strong> <strong>AWS Fault Injection Simulator (FIS)</strong> simulates failures (network latency, instance termination) to find weaknesses; <strong>CloudWatch Container Insights</strong> gives detailed container metrics/logs; <strong>Amazon Q</strong> can be queried for resilience-improvement suggestions.</p>
       </div>
+    
+      <div class="subhead">From the notes: characteristics, services, how to achieve</div>
+      <div class="grid grid--2">
+        <div class="card"><h4>HA characteristics</h4><p>Achieved via <strong>redundancy and failover</strong>: multiple instances across AZs/Regions · automated failover to healthy resources · continuous health checks.</p></div>
+        <div class="card"><h4>FT characteristics</h4><p><strong>No single point of failure</strong> · <strong>graceful degradation</strong> (no total loss of functionality) · <strong>self-healing</strong> (detect and recover automatically).</p></div>
+        <div class="card"><h4>Services for HA</h4><p>EC2 + ELB across AZs · RDS Multi-AZ (standby in another AZ) · S3 (data across AZs) · Route 53 (DNS failover) · Auto Scaling.</p></div>
+        <div class="card"><h4>Services for FT</h4><p>EC2 Auto Scaling (replaces unhealthy instances) · S3 and EFS (replicated across AZs) · ELB (stops routing to failed instances) · DynamoDB · Lambda · CloudFront (multiple edge locations).</p></div>
+      </div>
+      <p style="font-size:14.5px; color:var(--ink-soft);"><strong>How to achieve both:</strong> multi-AZ and multi-Region deployments · load balancing + Auto Scaling · data replication and backup (RDS Multi-AZ, DynamoDB Global Tables, automated backups, AWS Backup) · self-healing architectures (CloudWatch alarms trigger recovery; Lambda or Step Functions automate it). <strong>Benefits:</strong> improved reliability, business continuity, better user experience, automatic recovery. <strong>Challenges:</strong> complexity, cost, data consistency across AZs/Regions, latency of multi-Region.</p>
     </section>
 
     <!-- ============ 5.5 COST OPTIMIZATION ============ -->
@@ -2060,7 +2077,7 @@ footer{max-width:760px; padding:20px 0 60px; font-family:var(--mono); font-size:
       <p class="section__lede">Continuously optimizing spend without sacrificing performance or capacity, across every layer of a workload.</p>
 
       <div class="grid grid--2">
-        <div class="card"><h4>Reserved Instances</h4><p>For RDS, Redshift, ElastiCache, OpenSearch, and EC2 — up to <strong>72% savings</strong> over on-demand. Three payment options: All Upfront (AURI), Partial Upfront (PURI), No Upfront (NURI). Cost Explorer gives purchase recommendations from your usage.</p></div>
+        <div class="card"><h4>Reserved Instances</h4><p>For RDS, Redshift, ElastiCache, OpenSearch, and EC2 — up to <strong>75% savings</strong> over on-demand (Savings Plans: up to 72%). Three payment options: All Upfront (AURI), Partial Upfront (PURI), No Upfront (NURI). Cost Explorer gives purchase recommendations from your usage.</p></div>
         <div class="card"><h4>EC2 Savings</h4><p><strong>Spot Instances</strong> for interruption-tolerant workloads. <strong>Compute Savings Plans</strong> cover EC2/Fargate/Lambda; <strong>SageMaker Savings Plans</strong> cover SageMaker. Identify idle/low-utilization instances via Cost Explorer Resource Optimization, then stop (Instance Scheduler) or rightsize (Operations Conductor).</p></div>
         <div class="card"><h4>RDS &amp; Redshift Idle Detection</h4><p>Trusted Advisor's <strong>Idle DB Instances</strong> check flags RDS with no connections in 7 days → stop them. The <strong>Underutilized Redshift Clusters</strong> check flags &lt;5% average CPU over 7 days → pause them.</p></div>
         <div class="card"><h4>DynamoDB</h4><p>Monitor Consumed Read/Write Capacity Units in CloudWatch, then use <strong>Auto Scaling</strong> (scale in/out automatically) or the <strong>on-demand</strong> pricing option to pay only per request.</p></div>
@@ -2068,6 +2085,21 @@ footer{max-width:760px; padding:20px 0 60px; font-family:var(--mono); font-size:
         <div class="card"><h4>S3 Storage Tiers</h4><p><strong>S3 Analytics</strong> examines access patterns over 30+ days and recommends moving data to <strong>S3 Infrequent Access</strong> — or use lifecycle policies / <strong>S3 Intelligent-Tiering</strong> to automate the move.</p></div>
         <div class="card"><h4>Networking</h4><p>Trusted Advisor's <strong>Idle Load Balancers</strong> check flags load balancers with &lt;100 requests over 7 days → delete them; use Cost Explorer to review data-transfer costs.</p></div>
       </div>
+    
+      <div class="subhead">From the notes: pricing factors and models</div>
+      <p style="font-size:14.5px; color:var(--ink-soft);">AWS is <strong>pay-as-you-go</strong>. Price factors: <strong>compute time</strong> · <strong>storage</strong> (amount + class) · <strong>data transfer</strong> (same-Region often free) · <strong>provisioned resources</strong> (RDS, DynamoDB charge even if unused).</p>
+      <div class="grid grid--3">
+        <div class="card"><h4>On-Demand</h4><p>By the hour or second, no commitment. Short-term or unpredictable workloads that can't be interrupted.</p></div>
+        <div class="card"><h4>Reserved Instances</h4><p>One-time payment or 1/3-year term; up to <strong>75%</strong> off. Steady-state workloads.</p></div>
+        <div class="card"><h4>Savings Plans</h4><p>1/3-year usage commitment; up to <strong>72%</strong> off. Compute and EC2 Instance Savings Plans. More flexible than RIs.</p></div>
+        <div class="card"><h4>Spot Instances</h4><p>Unused EC2 capacity, up to <strong>90%</strong> off. Fault-tolerant, stateless work (batch, data analysis).</p></div>
+        <div class="card"><h4>Dedicated Hosts</h4><p>Physical servers for you — regulatory/compliance and physical isolation.</p></div>
+        <div class="card"><h4>Free Tier</h4><p>12 months for new customers; limited EC2, S3, Lambda usage.</p></div>
+      </div>
+      <div class="subhead">Strategies and tools</div>
+      <p style="font-size:14.5px; color:var(--ink-soft);"><strong>Strategies:</strong> right-size (Cost Explorer, Compute Optimizer) · Auto Scaling · Spot (mix with On-Demand) · Savings Plans/RIs (Compute SP flexible, EC2 Instance SP deeper savings) · optimize storage (right S3 class, lifecycle policies, keep only needed EBS snapshots) · monitor (Cost Explorer, Budgets, CloudWatch) · managed services (RDS, Fargate, Lambda) · automate stop/start with Lambda and Instance Scheduler.<br><br>
+      <strong>Tools:</strong> <strong>Cost Explorer</strong> (visualize, forecast) · <strong>Budgets</strong> (alerts when usage exceeds/forecast to exceed) · <strong>Trusted Advisor</strong> (underutilized resources, RI recommendations) · <strong>Pricing Calculator</strong> (estimate costs) · <strong>Cost and Usage Report</strong> (most detailed, by service/Region/account).<br><br>
+      <strong>Benefits:</strong> savings, resource efficiency, financial planning, agility. <strong>Challenges:</strong> complexity, changing workloads, continuous monitoring, balancing performance and cost.</p>
     </section>
 
     <!-- ============ 5.6 PERFORMANCE EFFICIENCY ============ -->
@@ -2095,6 +2127,13 @@ footer{max-width:760px; padding:20px 0 60px; font-family:var(--mono); font-size:
 
       <div class="subhead">How to select the best-performing architecture</div>
       <p style="font-size:14.5px; color:var(--ink-soft);">Understand available services and configuration options · define a repeatable process for architectural choices, encouraging experimentation and benchmarking · factor in cost requirements when sizing resources · use internal policies or published reference architectures · lean on AWS guidance (solutions architects, professional services, partners) · benchmark existing workloads · load-test the latest architecture across resource types/sizes to catch bottlenecks or excess capacity.</p>
+    
+      <div class="subhead">From the notes: services and tools</div>
+      <div class="grid grid--2">
+        <div class="card"><h4>Compute / storage</h4><p>EC2 (right type + Auto Scaling) · Lambda · S3 (storage class, <strong>Transfer Acceleration</strong>) · EBS (General Purpose, Provisioned IOPS, Throughput Optimized) · EFS (shared file storage).</p></div>
+        <div class="card"><h4>Database / delivery</h4><p>RDS/Aurora (read replicas, Multi-AZ) · DynamoDB (auto-scaling, on-demand) · <strong>ElastiCache</strong> (Redis or Memcached) · CloudFront · <strong>Global Accelerator</strong> · ELB.</p></div>
+      </div>
+      <p style="font-size:14.5px; color:var(--ink-soft);"><strong>Principles as listed in notes:</strong> data-driven approach · democratize advanced technologies · go global in minutes · experiment often · optimize over time. <strong>Tools:</strong> Compute Optimizer (recommends instance types) · Cost Explorer · <strong>Service Quotas</strong> (manage limits) · Auto Scaling · CloudWatch · Trusted Advisor. <strong>Benefits:</strong> user experience, cost-effectiveness, scalability, agility. <strong>Challenges:</strong> optimization complexity, monitoring overhead, resource selection.</p>
     </section>
 
     <!-- ============ M5 REVISION ============ -->
@@ -2238,6 +2277,9 @@ footer{max-width:760px; padding:20px 0 60px; font-family:var(--mono); font-size:
         <tr><td>14</td><td><strong>Amazon SQS</strong></td><td>Message queuing — create queues, send messages, manage settings.</td></tr>
         <tr><td>15</td><td><strong>Amazon SNS</strong></td><td>Notifications via email/SMS/push — manage topics, subscriptions, rules.</td></tr>
       </table></div>
+    
+      <div class="subhead">From the notes: features, advantages, challenges</div>
+      <p style="font-size:14.5px; color:var(--ink-soft);"><strong>Features:</strong> user-friendly GUI (no command-line knowledge) · centralized access with search bar · resource management (create, configure, terminate) · customizable dashboards · <strong>IAM</strong> integration · <strong>CloudWatch</strong> monitoring · Billing and Cost Management (budgets, alerts) · CloudFormation templates · KMS/security · <strong>mobile app</strong>. Login via AWS account, AWS SSO or MFA. <strong>Advantages:</strong> ease of use, centralized access, real-time monitoring, cost tools, role-based access control, quick provisioning, cross-account management via Organizations. <strong>Challenges:</strong> cumbersome for large deployments, limited automation, not ideal for CLI-minded users. <strong>Best practices:</strong> IAM roles + MFA, CloudFormation, tagging, review cost regularly (Cost Explorer), Trusted Advisor, use CLI/SDK for large-scale ops.</p>
     </section>
 
     <!-- ============ 6.2 AWS CLI ============ -->
@@ -2272,6 +2314,9 @@ footer{max-width:760px; padding:20px 0 60px; font-family:var(--mono); font-size:
         <span class="callout__label">Exam angle</span>
         Console vs CLI vs SDK is a classic compare question. <strong>Console</strong> = visual, manual, good for learning and one-off tasks. <strong>CLI</strong> = scriptable, repeatable, good for automation and CI/CD. <strong>SDK</strong> = programmatic, embedded inside your application code.
       </div>
+    
+      <div class="subhead">From the notes: what it is and how it runs</div>
+      <p style="font-size:14.5px; color:var(--ink-soft);">An <strong>open-source</strong> tool to interact with AWS from a terminal; one interface for 200+ services; runs on Windows, macOS, Linux and in CI/CD. Set up with <code>aws configure</code> (Access Key ID, Secret Access Key, Region, output format). Command structure: <code>aws &lt;service&gt; &lt;operation&gt; [options]</code>, e.g. <code>aws s3 ls</code>. Output is <strong>JSON by default</strong> (also YAML, text). Supports profiles, pagination, filtering, piping. <strong>Advantages:</strong> speed, automation, flexibility (CI/CD, Terraform), lightweight, consistent experience. <strong>Challenges:</strong> limited error feedback, no visualization, not ideal for very large-scale ops (CloudFormation/CDK better), credential security, needs updates.</p>
     </section>
 
     <!-- ============ 6.3 SDKs ============ -->
@@ -2334,6 +2379,9 @@ footer{max-width:760px; padding:20px 0 60px; font-family:var(--mono); font-size:
         <div class="card"><h4>AWS WorkDocs SDK</h4><p>File collaboration and management capabilities with full administrator and user-level access to WorkDocs site resources.</p></div>
         <div class="card"><h4>Amazon Chime SDK</h4><p>Adds real-time voice, video and messaging — powered by machine learning — into applications.</p></div>
       </div>
+    
+      <div class="subhead">From the notes: features, advantages, challenges</div>
+      <p style="font-size:14.5px; color:var(--ink-soft);">Libraries letting developers call AWS from their language without hand-crafting HTTP requests. <strong>Features:</strong> simplified API calls · credential management (env variables, IAM roles) · automatic error handling, retries and backoff · synchronous and asynchronous calls · service-specific features (S3, DynamoDB, Lambda, SNS/SQS) · multi-Region support · streaming/large payloads · serialization/deserialization · IAM support. Example: <code>ec2.describe_instances()</code> (Boto3). <strong>Advantages:</strong> ease of use, cross-language, automatic retry, security, scalability, active updates. <strong>Challenges:</strong> beginner complexity, large SDK size, dependency management, abstraction overhead, uneven service coverage.</p>
     </section>
 
     <!-- ============ 6.4 CLOUDFORMATION ============ -->
@@ -2429,6 +2477,9 @@ footer{max-width:760px; padding:20px 0 60px; font-family:var(--mono); font-size:
         <div class="card"><h4>Terraform</h4><p>Open-source IaC tool; lets you implement CI/CD pipelines while integrating multiple cloud providers such as Azure and Google Cloud.</p></div>
         <div class="card"><h4>Pulumi</h4><p>Powerful IaC tool that automates and provisions resources; supports AWS, Azure, OCI and more.</p></div>
       </div>
+    
+      <div class="subhead">From the notes: key features and how it works</div>
+      <p style="font-size:14.5px; color:var(--ink-soft);">Models and provisions infrastructure as code from a <strong>JSON or YAML</strong> template, declaratively. <strong>Features:</strong> stack management (a stack = resources managed as a unit, dependency order respected) · 200+ services · <strong>change sets</strong> (preview before applying) · <strong>StackSets</strong> (same stack across multiple accounts and Regions) · <strong>nested stacks</strong> (break up complex templates) · <strong>automated rollback</strong> to the previous stable state on error · <strong>outputs and exports</strong> (share values between stacks) · <strong>drift detection</strong> (changes made outside CloudFormation) · integrations (Lambda, IAM, SNS, CloudWatch) · parameters for reuse. Flow: create template → submit via Console/CLI/SDK → provision in dependency order → update via change sets → delete stack deletes its resources. <strong>Advantages:</strong> automation and consistency, version control (Git), scalability, multi-account/Region, security (IAM, Config, KMS), cost management, reusability, CI/CD. <strong>Challenges:</strong> limited error feedback, template size, template limits, slow stack updates, drift, third-party integration.</p>
     </section>
 
     <!-- ============ 6.5 TRUSTED ADVISOR ============ -->
@@ -2466,6 +2517,9 @@ footer{max-width:760px; padding:20px 0 60px; font-family:var(--mono); font-size:
         <div class="card"><h4>IAM Use Check</h4><p>Alerts you if you're using account-level credentials to control access instead of creating users, groups and roles.</p></div>
         <div class="card"><h4>MFA on Root Account Check</h4><p>Recommends multi-factor authentication, requiring additional authentication data from a secondary device.</p></div>
       </div>
+    
+      <div class="subhead">From the notes: five categories and how it works</div>
+      <p style="font-size:14.5px; color:var(--ink-soft);"><strong>Cost optimization</strong> (idle/underutilized EC2, EBS, RDS; RI recommendations; S3 storage; unassociated Elastic IPs) · <strong>Security</strong> (IAM best practices, S3 bucket permissions, security groups) · <strong>Fault tolerance</strong> (ELB, Auto Scaling, Multi-AZ RDS) · <strong>Performance</strong> (EC2 instance types, CloudFront) · <strong>Service limits</strong> (usage vs limits, alerts to request increases). Works via checks → recommendations → email notifications; viewable in the Console (filter by priority) and via API/CLI. <strong>Challenges:</strong> Basic Support gives only limited checks (full checks need Business/Enterprise), most fixes are manual, false positives/negatives, AWS resources only.</p>
     </section>
 
     <!-- ============ 6.6 CLOUDWATCH ============ -->
@@ -2560,6 +2614,9 @@ footer{max-width:760px; padding:20px 0 60px; font-family:var(--mono); font-size:
         <span class="callout__label">One-line distinction to memorize</span>
         <strong>CloudWatch = performance.</strong> <strong>CloudTrail = who did what.</strong> CloudWatch tells you the instance is at 95% CPU; CloudTrail tells you which IAM user terminated it.
       </div>
+    
+      <div class="subhead">From the notes: features and how it works</div>
+      <p style="font-size:14.5px; color:var(--ink-soft);">Monitoring and observability for AWS resources, applications and on-premises servers. <strong>Features:</strong> metrics · <strong>Logs</strong> · <strong>Alarms</strong> (e.g. trigger Auto Scaling or SNS) · <strong>Dashboards</strong> · <strong>Events/EventBridge</strong> (rules reacting to events) · <strong>Synthetics</strong> (synthetic tests simulating user interactions) · <strong>Contributor Insights</strong> (top contributors in high-cardinality logs) · <strong>Logs Insights</strong> (query language over logs) · <strong>ServiceLens</strong> (end-to-end view across logs, metrics, traces) · <strong>Anomaly Detection</strong> (ML-based, no manual thresholds). Metrics stored at 1-minute granularity; logs follow retention policies (retained indefinitely by default). <strong>Challenges:</strong> complexity at scale, costs can escalate, log retention costs, custom metrics at 1-minute granularity, alert fatigue, limited advanced analytics vs X-Ray/Datadog/Splunk.</p>
     </section>
 
     <!-- ============ 6.7 SYSTEMS MANAGER ============ -->
@@ -2586,6 +2643,9 @@ footer{max-width:760px; padding:20px 0 60px; font-family:var(--mono); font-size:
         <span class="callout__label">Key vocabulary</span>
         <strong>Managed node</strong> — an EC2 instance, on-premises server or VM configured for Systems Manager. <strong>SSM Agent</strong> — the software on the node that receives and executes requests. <strong>OpsItem</strong> — an operational work item created in response to an event or error.
       </div>
+    
+      <div class="subhead">From the notes: features and how it works</div>
+      <p style="font-size:14.5px; color:var(--ink-soft);">Unified management of AWS and on-premises systems via the <strong>SSM Agent</strong>. <strong>Automation</strong> (runbooks/automation documents in YAML or JSON) · <strong>State Manager</strong> (keep systems in a desired state) · <strong>Patch Manager</strong> (schedule patching windows, check compliance) · <strong>Parameter Store</strong> (config data and secrets, versioned) · <strong>Inventory</strong> (OS, applications, patches metadata; resource grouping by tags) · <strong>Run Command</strong> (run shell/PowerShell on many instances without SSH/RDP) · <strong>Session Manager</strong> (secure access over HTTPS, no open inbound ports, audit trail) · <strong>Compliance</strong> (configuration and patch compliance, integrates with AWS Config) · <strong>Change Manager</strong> (approval and tracking with CloudTrail and Config). <strong>Challenges:</strong> learning curve, large-environment complexity, permissions via IAM, cost of some features, dependence on the SSM Agent.</p>
     </section>
 
     <!-- ============ M6 REVISION ============ -->
@@ -2731,6 +2791,9 @@ footer{max-width:760px; padding:20px 0 60px; font-family:var(--mono); font-size:
         <div class="card"><h4>Secure</h4><p>Integrating with IAM restricts access to authorized users only.</p></div>
         <div class="card"><h4>Maps to AWS services</h4><p>Maps domain names to EC2 instances, S3 buckets and other AWS resources.</p></div>
       </div>
+    
+      <div class="subhead">From the notes: features and challenges</div>
+      <p style="font-size:14.5px; color:var(--ink-soft);">Scalable, highly available DNS web service with domain registration and health checking. Record types: A, AAAA, CNAME, MX, TXT and more. Domain registration supports 200+ TLDs and domain transfer. Routing policies: <strong>simple</strong> (single record), <strong>weighted</strong>, <strong>latency-based</strong>, <strong>geolocation</strong>, <strong>geoproximity</strong> (with bias), <strong>failover</strong>. Also <strong>DNS failover</strong>, health checks (HTTP/HTTPS/TCP), <strong>DNSSEC</strong>, <strong>Traffic Flow</strong> (visual routing configs), <strong>anycast DNS</strong>, CloudWatch integration; routes to EC2, S3, ELB, CloudFront, Lambda. <strong>Challenges:</strong> cost with many queries/health checks, complex advanced policies, domain extension limits, AWS dependency, complex failover setup.</p>
     </section>
 
     <!-- ============ 7.2 CLOUDFRONT ============ -->
@@ -2792,6 +2855,9 @@ footer{max-width:760px; padding:20px 0 60px; font-family:var(--mono); font-size:
 
       <div class="subhead">Web Application Firewall (WAF)</div>
       <p>A Web Application Firewall protects a web application by <strong>filtering, monitoring and blocking</strong> malicious HTTP/S traffic that might penetrate it. In simple terms, it acts as a shield between a web application and the internet, protecting it from different types of attacks.</p>
+    
+      <div class="subhead">From the notes: features and challenges</div>
+      <p style="font-size:14.5px; color:var(--ink-soft);">Global CDN with <strong>400+ edge locations</strong> caching static and dynamic content with low latency. Features: custom caching rules (headers, query parameters, cookies) · SSL/TLS and HTTPS · <strong>AWS Shield Standard</strong> · <strong>WAF</strong> integration · <strong>field-level encryption</strong> · <strong>Lambda@Edge</strong> (A/B testing, personalization, header injection) · origins (S3, EC2, external HTTP) · streaming (<strong>HLS, DASH</strong>, live) · <strong>geo-restriction</strong> · <strong>signed URLs and cookies</strong> · CloudWatch metrics (cache hit/miss, latency, errors) and access logs to S3 · pay-as-you-go with a free tier (1 TB transfer and 2 million requests per month). Cache lifetime set by <strong>TTL</strong>; invalidation manual or automatic. <strong>Challenges:</strong> cache invalidation, cost at high volume, uneven geographic coverage, not for every real-time need.</p>
     </section>
 
     <!-- ============ 7.3 API GATEWAY ============ -->
@@ -2850,6 +2916,9 @@ footer{max-width:760px; padding:20px 0 60px; font-family:var(--mono); font-size:
       </div>
 
       <p>In summary: API Gateway is a fully managed service making it easy to create, publish, maintain, monitor and secure APIs at any scale. Use it for building <strong>serverless applications</strong>, for <strong>integrating with legacy applications</strong>, or for <strong>proxying HTTP requests</strong> directly to other AWS services.</p>
+    
+      <div class="subhead">From the notes: features and challenges</div>
+      <p style="font-size:14.5px; color:var(--ink-soft);">Fully managed service to create, deploy and manage <strong>REST, WebSocket and HTTP APIs</strong>; entry point to Lambda, EC2 or any HTTP endpoint; public and private APIs. Features: CloudWatch monitoring · security via <strong>IAM, Lambda authorizers, Cognito</strong> (also API keys) · rate limiting and throttling · request/response transformation (mapping templates) · versioning · <strong>CORS</strong> · custom domain names · multiple <strong>stages</strong> (dev, prod) · response caching · backends: Lambda, HTTP, AWS services, <strong>Mock</strong>. Flow: create API → define resources + methods → integrate backend → secure → deploy to a stage → throttle/monitor → auto-scales. <strong>Challenges:</strong> complex pricing, Lambda cold starts, mainly HTTP/HTTPS, fine-grained rate limits need configuration, latency with large payloads, stateful WebSocket management.</p>
     </section>
 
     <!-- ============ 7.4 DIRECT CONNECT ============ -->
@@ -2889,6 +2958,9 @@ footer{max-width:760px; padding:20px 0 60px; font-family:var(--mono); font-size:
         <div class="card"><h4>Manage large datasets</h4><p>Seamless, reliable, large-scale data transfer for real-time analysis, quick data backup or broadcast media processing.</p></div>
         <div class="card"><h4>Build hybrid networks</h4><p>Connect on-premises and AWS networks to create cross-environment applications without sacrificing performance.</p></div>
       </div>
+    
+      <div class="subhead">From the notes: features, how it works, challenges</div>
+      <p style="font-size:14.5px; color:var(--ink-soft);">Dedicated private connection between on-premises and AWS, bypassing the public internet. <strong>1 Gbps to 100 Gbps</strong>; lower, consistent latency; redundancy through multiple connections; <strong>BGP</strong> for dynamic routing; many global locations. Flow: physical connection to a Direct Connect location → create <strong>VIFs</strong> (<strong>Private VIF</strong> to a VPC; <strong>Public VIF</strong> to public services like S3/DynamoDB) → traffic via BGP → redundancy/failover → CloudWatch monitoring. <strong>Challenges:</strong> setup complexity, location availability, upfront cost (port fees, cross-connects), physical infrastructure dependency, single point of failure without a backup, management overhead, long lead time.</p>
     </section>
 
     <!-- ============ 7.5 AWS VPN ============ -->
@@ -2931,6 +3003,9 @@ footer{max-width:760px; padding:20px 0 60px; font-family:var(--mono); font-size:
         <tr><td>Encryption</td><td>Private, not encrypted by default</td><td>IPSec encrypted by design</td></tr>
         <tr><td>Redundancy</td><td>Multiple connections for HA</td><td>Two tunnels per connection</td></tr>
       </table></div>
+    
+      <div class="subhead">From the notes: features, how it works, challenges</div>
+      <p style="font-size:14.5px; color:var(--ink-soft);"><strong>Site-to-Site VPN</strong> (on-premises device ↔ Virtual Private Gateway attached to a VPC) and <strong>Client VPN</strong> (individual users via a VPN client such as OpenVPN; access control by Active Directory or certificate-based mutual authentication). Encryption with <strong>IPsec / IKEv2</strong>; automatic tunnel recovery; redundant tunnels for failover; static or dynamic (<strong>BGP</strong>) routing; <strong>split tunneling</strong> for client VPN. Use for hybrid cloud, remote workforce, cost-effective or short-term connectivity when Direct Connect throughput isn't needed. <strong>Challenges:</strong> internet dependency, limited throughput, multi-VPC setup complexity, encryption overhead, scaling, misconfiguration risk.</p>
     </section>
 
     <!-- ============ 7.6 TRANSIT GATEWAY ============ -->
@@ -2960,6 +3035,9 @@ footer{max-width:760px; padding:20px 0 60px; font-family:var(--mono); font-size:
         <div class="card"><h4>Cost optimization</h4><p>AWS charges for data moving between VPCs. With Transit Gateway, data travelling between VPCs in the same Region usually stays within the gateway, lowering costs — like internal mail instead of postage per document.</p></div>
         <div class="card"><h4>Improved scalability</h4><p>Handles thousands of connections, making it simple to add more VPCs as the company expands — like an open-plan office you can rearrange rather than building new rooms.</p></div>
       </div>
+    
+      <div class="subhead">From the notes: features and challenges</div>
+      <p style="font-size:14.5px; color:var(--ink-soft);">Fully managed central hub connecting many VPCs, on-premises networks and remote offices (<strong>hub-and-spoke</strong>). Features: inter-VPC connectivity without peering · on-premises via <strong>Direct Connect or VPN</strong> · customizable <strong>route tables</strong> (also network segmentation) · <strong>multicast</strong> · <strong>PrivateLink</strong> integration · elastic scaling (thousands of VPCs) · security with <strong>AWS Network Firewall</strong> and encryption in transit · <strong>shared services VPC</strong> (DNS, NTP, Active Directory). VPCs connect through <strong>VPC attachments</strong>. <strong>Challenges:</strong> cost per attachment and data processing, routing-table complexity, limited Direct Connect gateways per Region, advanced inspection needs extra services, added hop latency, single point of failure without redundancy.</p>
     </section>
 
     <!-- ============ 7.7 SCENARIO DRILLS ============ -->
